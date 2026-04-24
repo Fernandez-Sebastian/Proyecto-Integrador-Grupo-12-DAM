@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/fondo_app">
+
+    <!-- Header azul -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="@color/azul_principal" />
+
+    <!-- Contenedor central entre las franjas azules -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="24dp">
+
+        <!-- Card central -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp"
+            android:background="@color/blanco"
+            android:elevation="4dp">
+
+            <!-- Título -->
+            <TextView
+                android:text="Sistema Club"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textColor="@color/gris_texto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:text="Bienvenido"
+                android:gravity="center"
+                android:layout_marginBottom="16dp"
+                android:textColor="@color/gris_texto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="8dp"/>
+
+            <!-- Usuario -->
+            <TextView
+                android:text="Usuario"
+                android:textColor="@color/gris_texto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:drawablePadding="8dp"/>
+
+            <EditText
+                android:id="@+id/etUsuario"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@android:drawable/edit_text"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="3dp"/>
+
+            <!-- Contraseña -->
+            <TextView
+                android:text="Contraseña"
+                android:textColor="@color/gris_texto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:drawableTint="@color/negro"
+                android:drawablePadding="8dp"
+                android:layout_marginTop="3dp"/>
+
+            <EditText
+                android:id="@+id/etPassword"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:inputType="textPassword"
+                android:hint="*********"
+                android:background="@android:drawable/edit_text"
+                android:layout_marginTop="0dp"/>
+
+            <!-- Botón -->
+            <Button
+                android:id="@+id/btnIngresar"
+                android:text="Ingresar"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/verde_boton"
+                android:textColor="@color/blanco"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"/>
+
+            <!-- Salir -->
+            <Button
+                android:id="@+id/btnIngresar"
+                android:text="Salir"
+                android:textColor="@color/negro"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/blanco"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Barra inferior -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="@color/azul_principal" />
+
+</LinearLayout>

@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+
+    <!-- Fondo general -->
+    <color name="fondo_app">#D9D9D9</color>
+
+    <!-- Azul (barras superior e inferior) -->
+    <color name="azul_principal">#4A7BD1</color>
+
+    <!-- Botón -->
+    <color name="verde_boton">#7FB77E</color>
+
+    <!-- Texto -->
+    <color name="blanco">#FFFFFF</color>
+    <color name="gris_texto">#666666</color>
+    <color name="negro">#000000</color>
+
 </resources>
