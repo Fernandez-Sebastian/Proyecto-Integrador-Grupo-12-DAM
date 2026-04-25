@@ -98,7 +98,7 @@
 
             <!-- Salir -->
             <Button
-                android:id="@+id/btnIngresar"
+                android:id="@+id/btnSalir"
                 android:text="Salir"
                 android:textColor="@color/negro"
                 android:layout_marginTop="20dp"

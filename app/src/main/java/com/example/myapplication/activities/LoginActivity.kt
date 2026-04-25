@@ -19,5 +19,13 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+
+        val btnSalir = findViewById<Button>(R.id.btnSalir)
+
+        btnSalir.setOnClickListener {
+            val intent = Intent(this, LogoutActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 }

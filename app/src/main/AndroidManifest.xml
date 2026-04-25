@@ -12,9 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
         <activity
-            android:name=".activities.MenuActivity"
+            android:name=".activities.LogoutActivity"
             android:exported="false" />
-        <!-- LOGIN (pantalla inicial) -->
+        <activity
+            android:name=".activities.MenuActivity"
+            android:exported="false" /> <!-- LOGIN (pantalla inicial) -->
         <activity
             android:name=".activities.LoginActivity"
             android:exported="true">
