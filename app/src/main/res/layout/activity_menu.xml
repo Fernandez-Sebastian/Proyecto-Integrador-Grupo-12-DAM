@@ -9,4 +9,10 @@
     android:gravity="center"
     tools:context=".activities.MenuActivity">
 
+    <Button
+        android:id="@+id/btnCobrarActividad"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Cobrar actividad"/>
+
 </LinearLayout>

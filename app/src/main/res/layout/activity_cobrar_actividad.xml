@@ -58,6 +58,7 @@
                 android:layout_height="wrap_content"/>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilBuscarDni"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
@@ -73,11 +74,11 @@
                 app:endIconDrawable="@android:drawable/ic_menu_search">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etBuscarDni"
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:hint="22345678"
+                    android:layout_height="60dp"
+                    android:hint="DNI"
                     android:paddingHorizontal="8dp"/>
-
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Card -->
@@ -105,9 +106,13 @@
                     android:layout_height="wrap_content"/>
 
                 <TextView
+                    android:id="@+id/tvResultado"
                     android:layout_width="match_parent"
                     android:layout_height="72dp"
                     android:background="@drawable/text_view_rounded"
+                    android:paddingStart="12dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
                     android:layout_marginBottom="12dp"/>
 
                 <!-- Actividad -->
@@ -141,6 +146,7 @@
                     android:layout_height="wrap_content"/>
 
                 <TextView
+                    android:id="@+id/tvPrecio"
                     android:text="$ 00.00"
                     android:textSize="18sp"
                     android:textStyle="bold"
@@ -160,7 +166,8 @@
                     android:layout_height="wrap_content"
                     app:boxBackgroundMode="filled"
                     app:endIconMode="dropdown_menu"
-                    android:background="@drawable/text_view_rounded">
+                    android:background="@drawable/text_view_rounded"
+                    android:layout_marginBottom="12dp">
 
                     <AutoCompleteTextView
                         android:id="@+id/seleccionarMedioDePago"
@@ -174,7 +181,7 @@
                 <!-- Botón registrar -->
                 <Button
                     android:text="Registrar no socio"
-                    android:layout_width="match_parent"
+                    android:layout_width="170dp"
                     android:layout_height="50dp"
                     android:backgroundTint="@color/blanco"
                     android:textColor="@color/azul_principal"
@@ -182,6 +189,7 @@
 
                 <!-- Botón cobrar -->
                 <Button
+                    android:id="@+id/btnCobrar"
                     android:text="Cobrar"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
