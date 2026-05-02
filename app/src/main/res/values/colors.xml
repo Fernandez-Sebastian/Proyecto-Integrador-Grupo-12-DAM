@@ -9,10 +9,19 @@
 
     <!-- Botón -->
     <color name="verde_boton">#7FB77E</color>
+    <color name="blanco_boton">#FFFFFF</color>
+    <color name="texto_boton">#000000</color>
 
     <!-- Texto -->
     <color name="blanco">#FFFFFF</color>
     <color name="gris_texto">#666666</color>
     <color name="negro">#000000</color>
+
+    <!-- Alertas -->
+    <color name="rojo_alerta">#D32F2F</color>
+    <color name="fondo_alerta_roja">#F5E0E0</color>
+
+    <color name="verde_alerta">#2E7D32</color>
+    <color name="fondo_alerta_verde">#E8F5E9</color>
 
 </resources>

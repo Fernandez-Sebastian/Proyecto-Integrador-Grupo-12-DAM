@@ -6,13 +6,10 @@
     android:orientation="vertical"
     android:background="@color/fondo_app">
 
-    <!-- Header azul -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:background="@color/azul_principal" />
+    <!-- HEADER -->
+    <include layout="@layout/header"/>
 
-    <!-- Contenedor central -->
+    <!-- CONTENEDOR CENTRAL -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -20,7 +17,7 @@
         android:gravity="center"
         android:padding="24dp">
 
-        <!-- Card grande -->
+        <!-- CARD GRANDE -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -49,7 +46,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
-            <!-- Card interna -->
+            <!-- CARD INTERNA -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -71,10 +68,7 @@
 
     </LinearLayout>
 
-    <!-- Footer azul -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:background="@color/azul_principal" />
+    <!-- FOOTER -->
+    <include layout="@layout/footer"/>
 
 </LinearLayout>

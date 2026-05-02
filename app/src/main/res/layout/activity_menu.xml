@@ -1,18 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center"
-    tools:context=".activities.MenuActivity">
+    android:background="@color/fondo_app">
 
-    <Button
-        android:id="@+id/btnCobrarActividad"
+    <!-- HEADER -->
+    <include layout="@layout/header"/>
+
+    <!-- CONTENIDO  TOTAL-->
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="Cobrar actividad"/>
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Título -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sistema Club"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textColor="@color/gris_texto"/>
+
+            <TextView
+                android:id="@+id/tvSaludo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Hola"
+                android:gravity="center"
+                android:textColor="@color/gris_texto"
+                android:layout_marginBottom="10dp"/>
+
+            <!-- ALERTA -->
+            <TextView
+                android:id="@+id/tvAlerta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="12dp"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- FILA 1 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnRegistrarSocio"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_weight="1"
+                    android:layout_margin="8dp"
+                    android:backgroundTint="@color/blanco_boton"
+                    android:textColor="@color/texto_boton"
+                    android:text="Registrar socio"/>
+
+                <Button
+                    android:id="@+id/btnRegistrarNoSocio"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_weight="1"
+                    android:layout_margin="8dp"
+                    android:backgroundTint="@color/blanco_boton"
+                    android:textColor="@color/texto_boton"
+                    android:text="Registrar no socio"/>
+            </LinearLayout>
+
+            <!-- FILA 2 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnVerVencimientos"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_weight="1"
+                    android:layout_margin="8dp"
+                    android:backgroundTint="@color/blanco_boton"
+                    android:textColor="@color/texto_boton"
+                    android:text="Ver vencimientos"/>
+
+                <Button
+                    android:id="@+id/btnCobrarCuota"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_weight="1"
+                    android:layout_margin="8dp"
+                    android:backgroundTint="@color/blanco_boton"
+                    android:textColor="@color/texto_boton"
+                    android:text="Cobrar cuota"/>
+            </LinearLayout>
+
+            <!-- FILA 3 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnCobrarActividad"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_weight="1"
+                    android:layout_margin="8dp"
+                    android:backgroundTint="@color/blanco_boton"
+                    android:textColor="@color/texto_boton"
+                    android:text="Cobrar actividad"/>
+
+                <Button
+                    android:id="@+id/btnCarnet"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_weight="1"
+                    android:layout_margin="8dp"
+                    android:backgroundTint="@color/blanco_boton"
+                    android:textColor="@color/texto_boton"
+                    android:text="Imprimir Carnet"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <!-- FOOTER -->
+    <include layout="@layout/footer"/>
 
 </LinearLayout>

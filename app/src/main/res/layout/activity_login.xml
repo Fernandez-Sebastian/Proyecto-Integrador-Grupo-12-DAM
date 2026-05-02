@@ -6,13 +6,10 @@
     android:orientation="vertical"
     android:background="@color/fondo_app">
 
-    <!-- Header azul -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:background="@color/azul_principal" />
+    <!-- HEADER -->
+    <include layout="@layout/header"/>
 
-    <!-- Contenedor central entre las franjas azules -->
+    <!-- CONTENEDOR CENTRAL -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -21,7 +18,7 @@
         android:gravity="center"
         android:padding="24dp">
 
-        <!-- Card central -->
+        <!-- CARD CENTRAL -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -63,7 +60,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:background="@android:drawable/edit_text"
-                android:layout_marginTop="0dp"
                 android:layout_marginBottom="3dp"/>
 
             <!-- Contraseña -->
@@ -83,8 +79,7 @@
                 android:layout_height="48dp"
                 android:inputType="textPassword"
                 android:hint="*********"
-                android:background="@android:drawable/edit_text"
-                android:layout_marginTop="0dp"/>
+                android:background="@android:drawable/edit_text"/>
 
             <!-- Botón -->
             <Button
@@ -110,10 +105,7 @@
 
     </LinearLayout>
 
-    <!-- Barra inferior -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:background="@color/azul_principal" />
+    <!-- FOOTER -->
+    <include layout="@layout/footer"/>
 
 </LinearLayout>
