@@ -13,6 +13,7 @@
         android:theme="@style/Theme.MyApplication">
         <activity android:name=".activities.CobrarActividad" />
         <activity android:name=".activities.ComprobanteActivity"/>
+        <activity android:name=".activities.RegistrarNoSocioActivity"/>
         <activity
             android:name=".activities.LogoutActivity"
             android:exported="false" />

@@ -1,7 +1,11 @@
 package com.example.myapplication.activities
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.R
 
@@ -12,6 +16,13 @@ class ComprobanteActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_comprobante)
 
+        //Volver atrás
+        val btnBack = findViewById<ImageButton>(R.id.btnBack)
+        btnBack.setOnClickListener {
+            finish()
+        }
+
+        //Card del comprobante
         val tv = findViewById<TextView>(R.id.tvComprobante)
 
         val nombre = intent.getStringExtra("nombre")
@@ -23,7 +34,7 @@ class ComprobanteActivity : AppCompatActivity() {
         val hora = intent.getStringExtra("hora")
 
         tv.text = """
-        Socio: $nombre
+        NoSocio: $nombre
         DNI: $dni
         Monto: $precio
         Método: $medioPago
@@ -31,5 +42,23 @@ class ComprobanteActivity : AppCompatActivity() {
         Hora: $hora
         Actividad: $actividad
         """.trimIndent()
+
+        //Descargar comprobante
+        val btnDescargar = findViewById<Button>(R.id.btnDescargar)
+
+        btnDescargar.setOnClickListener {
+            Toast.makeText(this, "Comprobante descargado con éxito",
+                Toast.LENGTH_SHORT).show()
+        }
+
+        //Volver al menú principal
+        val btnVolver = findViewById<Button>(R.id.btnVolverInicio)
+
+        btnVolver.setOnClickListener {
+            val intent = Intent(this, MenuActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(intent)
+            finish()
+        }
     }
 }

@@ -1,21 +1,98 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="20dp"
-    android:background="@drawable/bg_card">
+    android:background="@color/fondo_app">
 
-    <TextView
-        android:text="✓ Pago realizado"
+    <!-- Header -->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/verde_boton"
-        android:textStyle="bold"
-        android:textSize="16sp"
-        android:layout_marginBottom="12dp"/>
+        android:layout_height="80dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@color/azul_principal">
 
-    <TextView
-        android:id="@+id/tvComprobante"
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="16dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Volver"
+            android:src="@drawable/baseline_arrow_back_24"/>
+
+        <TextView
+            android:text="Confirmación de pago"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/blanco"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="60dp"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="4dp"/>
+
+    </LinearLayout>
+
+    <!-- Contenido centrado -->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <!-- Card -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp"
+            android:background="@drawable/bg_card"
+            android:elevation="2dp">
+
+            <TextView
+                android:text="✓ Pago realizado"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/verde_boton"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginBottom="12dp"/>
+
+            <TextView
+                android:id="@+id/tvComprobante"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <!-- Botón descargar -->
+        <Button
+            android:id="@+id/btnDescargar"
+            android:text="Descargar"
+            android:layout_width="170dp"
+            android:layout_height="50dp"
+            android:backgroundTint="@color/blanco"
+            android:textColor="@color/azul_principal"
+            android:layout_gravity="start"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- Botón volver -->
+        <Button
+            android:id="@+id/btnVolverInicio"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="Volver al inicio"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@color/verde_boton"
+            android:textColor="@color/blanco"/>
+
+    </LinearLayout>
+
+    <!-- FOOTER -->
+    <include layout="@layout/footer"/>
+
 </LinearLayout>
