@@ -7,7 +7,7 @@
     <!-- Azul (barras superior e inferior) -->
     <color name="azul_principal">#4A7BD1</color>
 
-    <!-- Botón -->
+    <!-- Botones -->
     <color name="verde_boton">#7FB77E</color>
     <color name="blanco_boton">#FFFFFF</color>
     <color name="texto_boton">#000000</color>
@@ -16,6 +16,14 @@
     <color name="blanco">#FFFFFF</color>
     <color name="gris_texto">#666666</color>
     <color name="negro">#000000</color>
+
+    <!-- NUEVOS COLORES TEXTO -->
+    <color name="texto_oscuro">#222222</color>
+    <color name="texto_hint">#808080</color>
+
+    <!-- Estados -->
+    <color name="estado_rojo">#C62828</color>
+    <color name="estado_verde">#2E7D32</color>
 
     <!-- Alertas -->
     <color name="rojo_alerta">#D32F2F</color>

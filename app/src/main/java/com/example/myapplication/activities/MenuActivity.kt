@@ -8,11 +8,14 @@ import android.widget.Button
 import android.widget.TextView
 
 class MenuActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
 
-        val btn = findViewById<Button>(R.id.btnCobrarActividad)
+        val btnCobrarActividad = findViewById<Button>(R.id.btnCobrarActividad)
+        val btnCobrarCuota = findViewById<Button>(R.id.btnCobrarCuota)
+
         val tvSaludo = findViewById<TextView>(R.id.tvSaludo)
 
         // Traemos el Usuario desde el login para mostrarlo
@@ -35,8 +38,13 @@ class MenuActivity : AppCompatActivity() {
             tvAlerta.setTextColor(getColor(R.color.verde_alerta))
         }
 
-        btn.setOnClickListener {
+        btnCobrarActividad.setOnClickListener {
             val intent = Intent(this, CobrarActividad::class.java)
+            startActivity(intent)
+        }
+
+        btnCobrarCuota.setOnClickListener {
+            val intent = Intent(this, CobrarCuotaActivity::class.java)
             startActivity(intent)
         }
     }

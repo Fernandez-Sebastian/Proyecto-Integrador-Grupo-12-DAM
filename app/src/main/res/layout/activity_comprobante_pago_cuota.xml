@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+android:background="@color/fondo_app">
+
+<!-- HEADER -->
+<include layout="@layout/header"/>
+
+<!-- CONTENIDO -->
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="20dp">
+
+    <!-- CARD -->
+    <LinearLayout
+        android:layout_width="260dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:background="@android:drawable/dialog_holo_light_frame">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="✔ Pago realizado"
+            android:textColor="@color/estado_verde"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:layout_marginBottom="18dp"/>
+
+        <TextView
+            android:id="@+id/tvNombre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Socio:"
+            android:textColor="@color/texto_oscuro"/>
+
+        <TextView
+            android:id="@+id/tvDni"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DNI:"
+            android:textColor="@color/texto_oscuro"/>
+
+        <TextView
+            android:id="@+id/tvMonto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Monto:"
+            android:textColor="@color/texto_oscuro"/>
+
+        <TextView
+            android:id="@+id/tvMetodo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Método:"
+            android:textColor="@color/texto_oscuro"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cuotas: 3 cuotas"
+            android:textColor="@color/texto_oscuro"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fecha: 16/04/2026"
+            android:textColor="@color/texto_oscuro"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hora: 18:55"
+            android:textColor="@color/texto_oscuro"/>
+
+    </LinearLayout>
+
+    <!-- BOTON DESCARGAR -->
+    <Button
+        android:id="@+id/btnDescargar"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:text="Descargar"
+        android:layout_marginTop="30dp"
+        android:backgroundTint="@color/blanco_boton"
+        android:textColor="@color/azul_principal"/>
+
+    <!-- BOTON VOLVER -->
+    <Button
+        android:id="@+id/btnVolverMenu"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:text="Volver"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/fondo_app"
+        android:textColor="@color/texto_oscuro"/>
+
+</LinearLayout>
+
+<!-- FOOTER -->
+<include layout="@layout/footer"/>
+
+</LinearLayout>

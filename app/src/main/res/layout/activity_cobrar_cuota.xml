@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/fondo_app">
+
+    <!-- HEADER -->
+    <include layout="@layout/header"/>
+
+    <!-- CONTENIDO -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- BUSCAR SOCIO -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Buscar socio"
+                android:textStyle="bold"
+                android:textColor="@color/texto_oscuro"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp"
+                android:background="@android:drawable/editbox_background"
+                android:padding="4dp">
+
+                <EditText
+                    android:id="@+id/etDniSocio"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Ingrese DNI del Socio"
+                    android:textColor="@color/texto_oscuro"
+                    android:textColorHint="#808080"
+                    android:background="@android:color/transparent"/>
+
+                <ImageButton
+                    android:id="@+id/btnBuscarSocio"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@android:drawable/ic_menu_search"
+                    android:background="@android:color/transparent"/>
+            </LinearLayout>
+
+            <!-- CARD DETALLE -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="16dp"
+                android:padding="16dp"
+                android:background="@android:drawable/dialog_holo_light_frame">
+
+                <!-- TITULO -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Detalle"
+                    android:textSize="18sp"
+                    android:gravity="center"
+                    android:layout_marginBottom="20dp"
+                    android:textColor="@color/texto_oscuro"/>
+
+                <!-- SOCIO -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Socio Seleccionado"
+                    android:textColor="@color/texto_oscuro"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="14dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@android:drawable/editbox_background">
+
+                    <TextView
+                        android:id="@+id/tvNombreSocio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ingrese DNI y presione buscar"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp"/>
+
+                    <TextView
+                        android:id="@+id/tvDniSocio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textColor="@android:color/black"
+                        android:textSize="15sp"
+                        android:layout_marginTop="4dp"/>
+
+                    <TextView
+                        android:id="@+id/tvEstadoSocio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textStyle="bold"
+                        android:textSize="15sp"
+                        android:layout_marginTop="6dp"/>
+
+                </LinearLayout>
+
+                <!-- MONTO -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Monto"
+                    android:textStyle="bold"
+                    android:layout_marginTop="20dp"/>
+
+                <TextView
+                    android:id="@+id/tvMonto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$ 00.00"
+                    android:textSize="32sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black"
+                    android:layout_marginTop="6dp"/>
+
+                <!-- METODO -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Método de pago"
+                    android:textStyle="bold"
+                    android:layout_marginTop="20dp"/>
+
+                <Spinner
+                    android:id="@+id/spMetodoPago"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"/>
+
+            </LinearLayout>
+
+            <!-- BOTON -->
+            <Button
+                android:id="@+id/btnCobrar"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:text="Cobrar Cuota"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="#7DBB74"
+                android:textColor="@android:color/white"/>
+
+            <Button
+                android:id="@+id/btnVerComprobante"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:text="Ver comprobante de pago"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginTop="12dp"
+                android:backgroundTint="@color/azul_principal"
+                android:textColor="@color/blanco"
+                android:visibility="gone"/>
+
+            <Button
+                android:id="@+id/btnVolverMenu"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:text="Ir al menú principal"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/fondo_app"
+                android:textColor="@color/texto_oscuro"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <!-- FOOTER -->
+    <include layout="@layout/footer"/>
+
+</LinearLayout>
