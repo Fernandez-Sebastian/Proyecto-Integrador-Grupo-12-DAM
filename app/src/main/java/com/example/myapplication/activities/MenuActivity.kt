@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.R
 import android.content.Intent
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 
 class MenuActivity : AppCompatActivity() {
@@ -37,6 +38,19 @@ class MenuActivity : AppCompatActivity() {
 
         btn.setOnClickListener {
             val intent = Intent(this, CobrarActividad::class.java)
+            startActivity(intent)
+        }
+
+        // Navegación del Footer
+        findViewById<ImageView>(R.id.iv_home).setOnClickListener {
+            val intent = Intent(this, MenuActivity::class.java)
+            intent.putExtra("usuario", nombreUsuario) // Mantener el usuario al volver a home
+            startActivity(intent)
+            finish()
+        }
+
+        findViewById<ImageView>(R.id.iv_logout).setOnClickListener {
+            val intent = Intent(this, LogoutActivity::class.java)
             startActivity(intent)
         }
     }
