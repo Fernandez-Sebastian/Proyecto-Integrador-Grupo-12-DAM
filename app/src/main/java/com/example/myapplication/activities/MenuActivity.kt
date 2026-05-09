@@ -50,5 +50,10 @@ class MenuActivity : AppCompatActivity() {
             val intent = Intent(this, RegistrarNoSocioActivity::class.java)
             startActivity(intent)
         }
+
+        btnCobrarCuota.setOnClickListener {
+            val intent = Intent(this, CobrarCuotaActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
