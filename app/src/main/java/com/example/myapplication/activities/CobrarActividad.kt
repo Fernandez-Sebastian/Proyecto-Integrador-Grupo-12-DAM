@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import com.example.myapplication.R
@@ -37,6 +38,13 @@ class CobrarActividad : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cobrar_actividad)
+
+        //Volver al menú principal
+        val btnBack = findViewById<ImageButton>(R.id.btnBack)
+        btnBack.setOnClickListener {
+            finish()
+        }
+
 
         //Buscar No Socio
 
@@ -100,10 +108,20 @@ class CobrarActividad : AppCompatActivity() {
 
         autoCompleteMedioPago.setAdapter(adapterMedioPago)
 
+        //Navegar a Registrar No Socio
+        val btnRegistrarNoSocio = findViewById<Button>(R.id.btnIrRegistrarNoSocio)
+
+        btnRegistrarNoSocio.setOnClickListener {
+
+            val intent = Intent(this, RegistrarNoSocioActivity::class.java)
+
+            startActivity(intent)
+        }
 
         //Comprobante de pago
 
         val btnCobrar = findViewById<Button>(R.id.btnCobrar)
+
         btnCobrar.setOnClickListener {
 
             val resultado = resultadoActual ?: return@setOnClickListener

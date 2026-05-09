@@ -18,7 +18,9 @@
             android:name=".activities.CobrarCuotaActivity"
             android:exported="false" />
         <activity android:name=".activities.CobrarActividad" />
-        <activity android:name=".activities.ComprobanteActivity" />
+
+        <activity android:name=".activities.ComprobanteActivity"/>
+        <activity android:name=".activities.RegistrarNoSocioActivity"/>
         <activity
             android:name=".activities.LogoutActivity"
             android:exported="false" />

@@ -43,8 +43,11 @@ class MenuActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        btnCobrarCuota.setOnClickListener {
-            val intent = Intent(this, CobrarCuotaActivity::class.java)
+        //Registrar No Socios
+        val btnRegistrarNoSocio = findViewById<Button>(R.id.btnRegistrarNoSocio)
+
+        btnRegistrarNoSocio.setOnClickListener {
+            val intent = Intent(this, RegistrarNoSocioActivity::class.java)
             startActivity(intent)
         }
     }
