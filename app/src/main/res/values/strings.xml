@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">My Application</string>
+    <string name="home">Inicio</string>
+    <string name="settings">Configuración</string>
+    <string name="logout">Cerrar sesión</string>
+    <string name="buscar_socio">Buscar socio</string>
+    <string name="juan_perez">Juan Pérez</string>
+    <string name="dni_juan">DNI: 1234567</string>
+    <string name="vencimiento_juan">Fecha vencimiento: 16/04/2027</string>
+    <string name="club_deportivo">CLUB DEPORTIVO</string>
+    <string name="imprimir_carnet">Imprimir carnet</string>
+    <string name="volver_al_inicio">Volver al inicio</string>
+    <string name="carnet_titulo">Carnet</string>
+    <string name="desc_volver">Volver</string>
+    <string name="desc_buscar">Buscar</string>
+    <string name="desc_foto_perfil">Foto de perfil</string>
+    <string name="desc_codigo_barras">Código de barras</string>
 </resources>
