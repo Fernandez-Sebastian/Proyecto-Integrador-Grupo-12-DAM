@@ -1,8 +1,11 @@
 package com.example.myapplication.activities
 
+import android.app.DatePickerDialog
 import android.icu.text.SimpleDateFormat
+import android.icu.util.Calendar
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.Switch
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
@@ -25,6 +28,13 @@ class RegistrarNoSocioActivity : AppCompatActivity() {
         val switchApto = findViewById<Switch>(R.id.switchApto)
         val btnRegistrar = findViewById<Button>(R.id.btnRegistrar)
 
+        //Volver al menú principal
+        val btnBack = findViewById<ImageButton>(R.id.btnBack)
+        btnBack.setOnClickListener {
+            finish()
+        }
+
+        //Registrar al No Socio
         btnRegistrar.setOnClickListener {
 
             val nombre = etNombre.text.toString()
@@ -58,6 +68,30 @@ class RegistrarNoSocioActivity : AppCompatActivity() {
                 .create()
 
             dialog.show()
+        }
+
+        //Elegir fecha en calendario
+        val etFecha = findViewById<TextInputEditText>(R.id.etFecha)
+
+        etFecha.setOnClickListener {
+
+            val calendario = Calendar.getInstance()
+
+            val year = calendario.get(Calendar.YEAR)
+            val month = calendario.get(Calendar.MONTH)
+            val day = calendario.get(Calendar.DAY_OF_MONTH)
+
+            val datePicker = DatePickerDialog(
+                this,
+                { _, y, m, d ->
+                    etFecha.setText("$d/${m + 1}/$y")
+                },
+                year,
+                month,
+                day
+            )
+
+            datePicker.show()
         }
 
     }

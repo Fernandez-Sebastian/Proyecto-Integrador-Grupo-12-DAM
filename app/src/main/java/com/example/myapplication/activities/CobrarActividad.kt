@@ -108,10 +108,20 @@ class CobrarActividad : AppCompatActivity() {
 
         autoCompleteMedioPago.setAdapter(adapterMedioPago)
 
+        //Navegar a Registrar No Socio
+        val btnRegistrarNoSocio = findViewById<Button>(R.id.btnIrRegistrarNoSocio)
+
+        btnRegistrarNoSocio.setOnClickListener {
+
+            val intent = Intent(this, RegistrarNoSocioActivity::class.java)
+
+            startActivity(intent)
+        }
 
         //Comprobante de pago
 
         val btnCobrar = findViewById<Button>(R.id.btnCobrar)
+
         btnCobrar.setOnClickListener {
 
             val resultado = resultadoActual ?: return@setOnClickListener
