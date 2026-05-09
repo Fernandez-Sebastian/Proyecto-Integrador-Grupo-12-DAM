@@ -15,6 +15,7 @@ class MenuActivity : AppCompatActivity() {
 
         val btn = findViewById<Button>(R.id.btnCobrarActividad)
         val tvSaludo = findViewById<TextView>(R.id.tvSaludo)
+        val btnCarnet= findViewById<Button>(R.id.btnCarnet)
 
         // Traemos el Usuario desde el login para mostrarlo
         val nombreUsuario = intent.getStringExtra("usuario")
@@ -51,6 +52,11 @@ class MenuActivity : AppCompatActivity() {
 
         findViewById<ImageView>(R.id.iv_logout).setOnClickListener {
             val intent = Intent(this, LogoutActivity::class.java)
+            startActivity(intent)
+        }
+
+        btnCarnet.setOnClickListener {
+            val intent = Intent(this, CarnetActivity::class.java)
             startActivity(intent)
         }
     }
