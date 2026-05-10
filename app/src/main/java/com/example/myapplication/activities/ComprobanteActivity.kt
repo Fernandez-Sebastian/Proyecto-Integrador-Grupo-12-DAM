@@ -16,6 +16,9 @@ class ComprobanteActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_comprobante)
+        val tvHeaderTitle = findViewById<TextView>(R.id.tvHeaderTitle)
+
+        tvHeaderTitle?.text = "Comprobante pago de actividad"
 
         //Volver atrás
         val btnBack = findViewById<ImageButton>(R.id.btnBack)
