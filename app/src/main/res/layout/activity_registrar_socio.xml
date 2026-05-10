@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/fondo_app">
+
+    <!-- Header-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@color/azul_principal">
+
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="16dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Volver"
+            android:src="@drawable/baseline_arrow_back_24"/>
+
+        <TextView
+            android:text="Registrar socio"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/blanco"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="72dp"/>
+
+    </LinearLayout>
+
+
+    <!-- Datos del socio -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Card formulario -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:background="@drawable/bg_card"
+                android:backgroundTint="@color/blanco"
+                android:elevation="4dp">
+
+                <!-- Nombre -->
+                <TextView
+                    android:text="Nombre"
+                    android:textColor="@color/negro"
+                    android:textStyle="bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilNombre"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="12dp"
+                    app:boxBackgroundMode="outline"
+                    app:boxBackgroundColor="@color/blanco"
+                    app:boxStrokeColor="#D9D9D9"
+                    app:boxCornerRadiusTopStart="12dp"
+                    app:boxCornerRadiusTopEnd="12dp"
+                    app:boxCornerRadiusBottomStart="12dp"
+                    app:boxCornerRadiusBottomEnd="12dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/txtNombre"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:singleLine="true"
+                        android:inputType="textPersonName"
+                        android:paddingHorizontal="8dp"
+                        android:textColor="@color/negro"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Apellido -->
+                <TextView
+                    android:text="Apellido"
+                    android:textColor="@color/negro"
+                    android:textStyle="bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilApellido"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="12dp"
+                    app:boxBackgroundMode="outline"
+                    app:boxBackgroundColor="@color/blanco"
+                    app:boxStrokeColor="#D9D9D9"
+                    app:boxCornerRadiusTopStart="12dp"
+                    app:boxCornerRadiusTopEnd="12dp"
+                    app:boxCornerRadiusBottomStart="12dp"
+                    app:boxCornerRadiusBottomEnd="12dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/txtApellido"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:singleLine="true"
+                        android:inputType="textPersonName"
+                        android:paddingHorizontal="8dp"
+                        android:textColor="@color/negro"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- DNI -->
+                <TextView
+                    android:text="DNI"
+                    android:textColor="@color/negro"
+                    android:textStyle="bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilDni"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="12dp"
+                    app:boxBackgroundMode="outline"
+                    app:boxBackgroundColor="@color/blanco"
+                    app:boxStrokeColor="#D9D9D9"
+                    app:boxCornerRadiusTopStart="12dp"
+                    app:boxCornerRadiusTopEnd="12dp"
+                    app:boxCornerRadiusBottomStart="12dp"
+                    app:boxCornerRadiusBottomEnd="12dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/txtDni"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:singleLine="true"
+                        android:inputType="number"
+                        android:paddingHorizontal="8dp"
+                        android:textColor="@color/negro"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Fecha nacimiento -->
+                <TextView
+                    android:text="Fecha de nacimiento"
+                    android:textColor="@color/negro"
+                    android:textStyle="bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilFechaNacimiento"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="12dp"
+                    app:boxBackgroundMode="outline"
+                    app:boxBackgroundColor="@color/blanco"
+                    app:boxStrokeColor="#D9D9D9"
+                    app:boxCornerRadiusTopStart="12dp"
+                    app:boxCornerRadiusTopEnd="12dp"
+                    app:boxCornerRadiusBottomStart="12dp"
+                    app:boxCornerRadiusBottomEnd="12dp"
+                    app:endIconMode="custom"
+                    app:endIconDrawable="@android:drawable/ic_menu_my_calendar">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tvFechaNacimiento"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:hint="dd/mm/aaaa"
+                        android:focusable="false"
+                        android:clickable="true"
+                        android:inputType="none"
+                        android:paddingHorizontal="8dp"
+                        android:textColor="@color/negro"
+                        android:textColorHint="@color/gris_texto"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Switch para Apto médico -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="18dp">
+
+                    <TextView
+                        android:text="Apto médico"
+                        android:textColor="@color/negro"
+                        android:textStyle="bold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"/>
+
+                    <Switch
+                        android:id="@+id/switchAptoMedico"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"/>
+                </LinearLayout>
+
+                <!-- Boton de Imprimir carnet -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnImprimirCarnet"
+                    android:layout_width="170dp"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="30dp"
+                    android:text="Imprimir carnet"
+                    android:textColor="@color/azul_principal"
+                    android:backgroundTint="@color/blanco"
+                    app:strokeColor="@color/azul_principal"
+                    app:strokeWidth="2dp"
+                    app:cornerRadius="12dp"/>
+
+                <!-- Boton de Registrar -->
+                <Button
+                    android:id="@+id/btnRegistrar"
+                    android:text="Registrar"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:backgroundTint="@color/verde_boton"
+                    android:textColor="@color/blanco"
+                    android:textSize="16sp"
+                    android:textStyle="bold"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <!-- Footer generico -->
+    <include layout="@layout/footer" />
+
+</LinearLayout>

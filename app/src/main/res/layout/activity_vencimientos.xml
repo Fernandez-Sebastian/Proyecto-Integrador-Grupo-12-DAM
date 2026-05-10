@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/fondo_app">
+
+    <!-- Header-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@color/azul_principal">
+
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="16dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Volver"
+            android:src="@drawable/baseline_arrow_back_24"/>
+
+        <TextView
+            android:text="Vencimientos"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/blanco"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="72dp"/>
+
+    </LinearLayout>
+
+    <!-- cards de vencimientos -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="10dp">
+
+        <!-- Filtros -->
+        <LinearLayout
+            android:id="@+id/contenedorFiltros"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="10dp">
+
+            <!-- Filtros Todos-->
+            <TextView
+                android:id="@+id/filtroTodos"
+                android:layout_width="wrap_content"
+                android:layout_height="28dp"
+                android:gravity="center"
+                android:paddingStart="14dp"
+                android:paddingEnd="14dp"
+                android:text="Todos"
+                android:textSize="13sp"
+                android:textColor="@color/blanco"
+                android:background="@drawable/bg_card"
+                android:backgroundTint="@color/azul_principal"
+                android:layout_marginEnd="8dp" />
+
+            <!-- Filtros vencidos-->
+            <TextView
+                android:id="@+id/filtroVencidos"
+                android:layout_width="wrap_content"
+                android:layout_height="28dp"
+                android:gravity="center"
+                android:paddingStart="14dp"
+                android:paddingEnd="14dp"
+                android:text="Vencidos"
+                android:textSize="13sp"
+                android:textColor="@color/negro"
+                android:background="@drawable/bg_card"
+                android:backgroundTint="@color/blanco"
+                android:layout_marginEnd="8dp" />
+
+            <!-- Filtros al día -->
+            <TextView
+                android:id="@+id/filtroAlDia"
+                android:layout_width="wrap_content"
+                android:layout_height="28dp"
+                android:gravity="center"
+                android:paddingStart="14dp"
+                android:paddingEnd="14dp"
+                android:text="Al día"
+                android:textSize="13sp"
+                android:textColor="@color/negro"
+                android:background="@drawable/bg_card"
+                android:backgroundTint="@color/blanco" />
+
+        </LinearLayout>
+
+        <!-- Scroll para las cards -->
+        <ScrollView
+            android:id="@+id/scrollVencimientos"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:id="@+id/contenedorVencimientos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="12dp" />
+
+        </ScrollView>
+
+    </LinearLayout>
+
+    <!-- Footer generico -->
+    <include layout="@layout/footer" />
+
+</LinearLayout>

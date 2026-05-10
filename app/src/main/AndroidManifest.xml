@@ -17,16 +17,25 @@
         <activity
             android:name=".activities.CobrarCuotaActivity"
             android:exported="false" />
-        <activity android:name=".activities.CobrarActividad" />
+        <activity
+            android:name=".activities.VencimientosActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.RegistrarSocioActivity"
+            android:exported="false" />
+        <activity android:name=".activities.CobrarActividad"
+            android:exported="false" />
 
-        <activity android:name=".activities.ComprobanteActivity"/>
-        <activity android:name=".activities.RegistrarNoSocioActivity"/>
+        <activity android:name=".activities.ComprobanteActivity"
+            android:exported="false" />
+        <activity android:name=".activities.RegistrarNoSocioActivity"
+            android:exported="false" />
         <activity
             android:name=".activities.LogoutActivity"
             android:exported="false" />
         <activity
             android:name=".activities.MenuActivity"
-            android:exported="false" /> <!-- LOGIN (pantalla inicial) -->
+            android:exported="false" />
         <activity
             android:name=".activities.LoginActivity"
             android:exported="true">
@@ -35,7 +44,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- Podés dejar Main temporalmente o borrarlo después -->
+        </activity>
         <activity
             android:name=".MainActivity"
             android:exported="false" />
