@@ -15,4 +15,9 @@
     <string name="desc_buscar">Buscar</string>
     <string name="desc_foto_perfil">Foto de perfil</string>
     <string name="desc_codigo_barras">Código de barras</string>
+    <string name="hint_dni">Ingrese DNI</string>
+    <string name="mensaje_busqueda_inicial">Ingrese una nueva búsqueda...</string>
+    <string name="socio_encontrado">Socio encontrado</string>
+    <string name="socio_inexistente">Socio Inexistente</string>
+    <string name="archivo_descargado">¡Archivo descargado en el dispositivo!</string>
 </resources>

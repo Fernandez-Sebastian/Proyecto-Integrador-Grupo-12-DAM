@@ -4,8 +4,10 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.R
 import android.content.Intent
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 
 class MenuActivity : AppCompatActivity() {
@@ -24,7 +26,6 @@ class MenuActivity : AppCompatActivity() {
         val tvAlerta = findViewById<TextView>(R.id.tvAlerta)
 
         // Alert de Vencimiento
-        // to do Manejo de la variable hayVencimientos por medio de una consulta a la base de datos
         val hayVencimientos = false
 
         if (hayVencimientos) {
@@ -42,21 +43,28 @@ class MenuActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        // Navegación del Footer
-        findViewById<ImageView>(R.id.iv_home).setOnClickListener {
-            val intent = Intent(this, MenuActivity::class.java)
-            intent.putExtra("usuario", nombreUsuario) // Mantener el usuario al volver a home
-            startActivity(intent)
-            finish()
-        }
-
-        findViewById<ImageView>(R.id.iv_logout).setOnClickListener {
-            val intent = Intent(this, LogoutActivity::class.java)
-            startActivity(intent)
-        }
-
         btnCarnet.setOnClickListener {
             val intent = Intent(this, CarnetActivity::class.java)
+            intent.putExtra("usuario", nombreUsuario)
+            startActivity(intent)
+        }
+
+        // --- LÓGICA DEL FOOTER ---
+        val llCentro = findViewById<LinearLayout>(R.id.ll_footer_centro)
+        val ivHome = findViewById<ImageView>(R.id.iv_home)
+        val ivSettings = findViewById<ImageView>(R.id.iv_settings)
+        val ivLogout = findViewById<ImageView>(R.id.iv_logout)
+
+        // Mostrar la franja blanca
+        llCentro.visibility = View.VISIBLE
+        
+        // En el Menú: No aparece Home. Aparecen Settings y Logout.
+        ivHome.visibility = View.GONE
+        ivSettings.visibility = View.VISIBLE
+        ivLogout.visibility = View.VISIBLE
+
+        ivLogout.setOnClickListener {
+            val intent = Intent(this, LogoutActivity::class.java)
             startActivity(intent)
         }
     }
