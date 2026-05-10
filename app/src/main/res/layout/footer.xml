@@ -5,15 +5,16 @@
     android:layout_height="120dp"
     android:orientation="vertical">
 
-    <!-- Franja superior celeste -->
+    <!-- Franja superior azul -->
     <View
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:background="@color/azul_principal" />
 
-    <!-- Sección central blanca e iconos -->
+    <!-- Sección central blanca e iconos (oculta por defecto para login/logout) -->
     <LinearLayout
+        android:id="@+id/ll_footer_centro"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="2"
@@ -21,7 +22,8 @@
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:paddingStart="20dp"
-        android:paddingEnd="20dp">
+        android:paddingEnd="20dp"
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/iv_home"
@@ -30,7 +32,8 @@
             android:src="@drawable/ic_1_home"
             android:contentDescription="@string/home"
             android:layout_marginEnd="15dp"
-            android:scaleType="fitCenter" />
+            android:scaleType="fitCenter"
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/iv_settings"
@@ -39,7 +42,8 @@
             android:src="@drawable/ic_2_settings"
             android:contentDescription="@string/settings"
             android:layout_marginEnd="15dp"
-            android:scaleType="fitCenter" />
+            android:scaleType="fitCenter"
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/iv_logout"
@@ -47,11 +51,12 @@
             android:layout_height="40dp"
             android:src="@drawable/ic_3_logout"
             android:contentDescription="@string/logout"
-            android:scaleType="fitCenter" />
+            android:scaleType="fitCenter"
+            android:visibility="gone" />
 
     </LinearLayout>
 
-    <!-- Franja inferior celeste -->
+    <!-- Franja inferior azul -->
     <View
         android:layout_width="match_parent"
         android:layout_height="0dp"
