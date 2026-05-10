@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.myapplication.R
+import com.example.myapplication.utils.FooterManager
 
 class VencimientosActivity : AppCompatActivity() {
 
@@ -33,7 +34,6 @@ class VencimientosActivity : AppCompatActivity() {
         val estado: EstadoVencimiento
     )
 
-    //Por ahora simulamos con 4 socios fijos y luego se traeran los socios de base de datos
     private val vencimientosSocios = listOf(
         VencimientoSocio("Glaucia Ferreira", "95789456", EstadoVencimiento.VENCIDO),
         VencimientoSocio("Andrea Maslucan", "95639789", EstadoVencimiento.AL_DIA),
@@ -52,15 +52,18 @@ class VencimientosActivity : AppCompatActivity() {
             insets
         }
 
+        // Configurar Header Unificado
         btnBack = findViewById(R.id.btnBack)
+        val tvHeaderTitle = findViewById<TextView>(R.id.tvHeaderTitle)
+        tvHeaderTitle?.text = "Vencimientos"
+        btnBack.setOnClickListener {
+            finish()
+        }
+
         contenedorVencimientos = findViewById(R.id.contenedorVencimientos)
         filtroTodos = findViewById(R.id.filtroTodos)
         filtroVencidos = findViewById(R.id.filtroVencidos)
         filtroAlDia = findViewById(R.id.filtroAlDia)
-
-        btnBack.setOnClickListener {
-            finish()
-        }
 
         filtroTodos.setOnClickListener {
             cargarVencimientos(vencimientosSocios)
@@ -81,15 +84,14 @@ class VencimientosActivity : AppCompatActivity() {
 
         cargarVencimientos(vencimientosSocios)
         seleccionarFiltro(filtroTodos)
+
+        FooterManager.setupFooter(this, showWhiteBar = true, showHome = true, showSettings = true, showLogout = true)
     }
 
     private fun cargarVencimientos(listaSocios: List<VencimientoSocio>) {
         contenedorVencimientos.removeAllViews()
-
         for (socio in listaSocios) {
-            val item = LayoutInflater.from(this)
-                .inflate(R.layout.item_vencimiento, contenedorVencimientos, false)
-
+            val item = LayoutInflater.from(this).inflate(R.layout.item_vencimiento, contenedorVencimientos, false)
             val barraEstado = item.findViewById<View>(R.id.barraEstado)
             val tvNombreSocio = item.findViewById<TextView>(R.id.tvNombreSocio)
             val tvDniSocio = item.findViewById<TextView>(R.id.tvDniSocio)
@@ -113,17 +115,10 @@ class VencimientosActivity : AppCompatActivity() {
 
     private fun seleccionarFiltro(filtroSeleccionado: TextView) {
         val filtros = listOf(filtroTodos, filtroVencidos, filtroAlDia)
-
         for (filtro in filtros) {
             val seleccionado = filtro == filtroSeleccionado
-
-            filtro.backgroundTintList = ColorStateList.valueOf(
-                Color.parseColor(if (seleccionado) "#4A7BD1" else "#FFFFFF")
-            )
-
-            filtro.setTextColor(
-                Color.parseColor(if (seleccionado) "#FFFFFF" else "#000000")
-            )
+            filtro.backgroundTintList = ColorStateList.valueOf(Color.parseColor(if (seleccionado) "#4A7BD1" else "#FFFFFF"))
+            filtro.setTextColor(Color.parseColor(if (seleccionado) "#FFFFFF" else "#000000"))
         }
     }
 }

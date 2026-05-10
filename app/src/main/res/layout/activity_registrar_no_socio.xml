@@ -7,35 +7,8 @@
     android:orientation="vertical"
     android:background="@color/fondo_app">
 
-    <!-- Header azul con título -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:background="@color/azul_principal">
-
-        <ImageButton
-            android:id="@+id/btnBack"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="16dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Volver"
-            android:src="@drawable/baseline_arrow_back_24"/>
-
-        <TextView
-            android:text="Registrar No Socio"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="@color/blanco"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="60dp"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="4dp"/>
-
-    </LinearLayout>
+    <!-- HEADER UNIFICADO -->
+    <include layout="@layout/header"/>
 
     <!-- Contenido -->
     <ScrollView

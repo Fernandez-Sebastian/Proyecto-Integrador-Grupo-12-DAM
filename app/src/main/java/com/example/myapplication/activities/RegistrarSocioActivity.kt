@@ -6,10 +6,11 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Switch
-import android.widget.Toast
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.R
+import com.example.myapplication.utils.FooterManager
 import com.google.android.material.textfield.TextInputEditText
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -48,7 +49,14 @@ class RegistrarSocioActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registrar_socio)
 
+        // Configurar Header
         btnBack = findViewById(R.id.btnBack)
+        val tvHeaderTitle = findViewById<TextView>(R.id.tvHeaderTitle)
+        tvHeaderTitle?.text = "Registrar Socio"
+        btnBack.setOnClickListener {
+            finish()
+        }
+
         txtNombre = findViewById(R.id.txtNombre)
         txtApellido = findViewById(R.id.txtApellido)
         txtDni = findViewById(R.id.txtDni)
@@ -57,12 +65,7 @@ class RegistrarSocioActivity : AppCompatActivity() {
         btnImprimirCarnet = findViewById(R.id.btnImprimirCarnet)
         btnRegistrar = findViewById(R.id.btnRegistrar)
 
-        btnBack.setOnClickListener {
-            finish()
-        }
-
         tvFechaNacimiento.setOnClickListener {
-            var fechaNacimientoSeleccionada: Calendar? = null
             val formatoFecha = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
             val fechaActual = Calendar.getInstance()
 
@@ -71,8 +74,6 @@ class RegistrarSocioActivity : AppCompatActivity() {
                 { _, year, month, dayOfMonth ->
                     val fechaSeleccionada = Calendar.getInstance()
                     fechaSeleccionada.set(year, month, dayOfMonth)
-
-                    fechaNacimientoSeleccionada = fechaSeleccionada
                     tvFechaNacimiento.setText(formatoFecha.format(fechaSeleccionada.time))
                 },
                 fechaActual.get(Calendar.YEAR),
@@ -87,21 +88,18 @@ class RegistrarSocioActivity : AppCompatActivity() {
         }
 
         btnImprimirCarnet.setOnClickListener {
-            val socio = socioIngresado
-
-            /*if (socio == null) {
-                Toast.makeText(
-                    this,
-                    "Primero debe registrar un socio.",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }*/
-            //completar luego para abrir CarnetActivity
-            //para abrir con los datos del socio registrado
-            //revisar primero si podemos con datos sino abrir sin datos para que quede el flujo
             val intent = Intent(this, CarnetActivity::class.java)
             startActivity(intent)
         }
+
+        // --- LÓGICA DEL FOOTER ---
+        FooterManager.setupFooter(
+            activity = this,
+            showWhiteBar = true,
+            showHome = true,
+            showSettings = true,
+            showLogout = true
+        )
     }
 
     private fun registrarSocio() {
@@ -154,33 +152,25 @@ class RegistrarSocioActivity : AppCompatActivity() {
             txtNombre.error = "Ingrese el nombre"
             return false
         }
-
         if (apellido.isEmpty()) {
             txtApellido.error = "Ingrese el apellido"
             return false
         }
-
         if (dni.isEmpty()) {
             txtDni.error = "Ingrese el DNI"
             return false
         }
-
         if (fechaNacimiento.isEmpty() || fechaNacimiento == "dd/mm/aaaa") {
             tvFechaNacimiento.error = "Ingrese la fecha de nacimiento"
             return false
         }
-
         if (!switchAptoMedico.isChecked) {
-
             mostrarDialogo(
                 titulo = "Apto médico requerido",
                 mensaje = "El socio debe tener apto médico para registrarse."
             )
             return false
         }
-
-        //faltan validaciones de dni valido, edad valida, etc
-
         return true
     }
 

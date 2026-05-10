@@ -8,6 +8,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.R
+import com.example.myapplication.utils.FooterManager
 
 
 class ComprobanteActivity : AppCompatActivity() {
@@ -60,5 +61,14 @@ class ComprobanteActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+
+        // --- LÓGICA DEL FOOTER ---
+        FooterManager.setupFooter(
+            activity = this,
+            showWhiteBar = true,
+            showHome = true,
+            showSettings = true,
+            showLogout = true
+        )
     }
 }

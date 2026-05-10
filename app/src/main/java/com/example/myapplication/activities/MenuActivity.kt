@@ -4,11 +4,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.R
 import android.content.Intent
-import android.view.View
 import android.widget.Button
-import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
+import com.example.myapplication.utils.FooterManager
 
 class MenuActivity : AppCompatActivity() {
 
@@ -84,22 +82,12 @@ class MenuActivity : AppCompatActivity() {
         }
 
         // --- LÓGICA DEL FOOTER ---
-        val llCentro = findViewById<LinearLayout>(R.id.ll_footer_centro)
-        val ivHome = findViewById<ImageView>(R.id.iv_home)
-        val ivSettings = findViewById<ImageView>(R.id.iv_settings)
-        val ivLogout = findViewById<ImageView>(R.id.iv_logout)
-
-        // Mostrar la franja blanca
-        llCentro.visibility = View.VISIBLE
-        
-        // En el Menú: No aparece Home. Aparecen Settings y Logout.
-        ivHome.visibility = View.GONE
-        ivSettings.visibility = View.VISIBLE
-        ivLogout.visibility = View.VISIBLE
-
-        ivLogout.setOnClickListener {
-            val intent = Intent(this, LogoutActivity::class.java)
-            startActivity(intent)
-        }
+        FooterManager.setupFooter(
+            activity = this,
+            showWhiteBar = true,
+            showHome = false,
+            showSettings = true,
+            showLogout = true
+        )
     }
 }

@@ -7,35 +7,8 @@
     android:orientation="vertical"
     android:background="@color/fondo_app">
 
-    <!-- Header azul con título -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:background="@color/azul_principal">
-
-        <ImageButton
-            android:id="@+id/btnBack"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="16dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Volver"
-            android:src="@drawable/baseline_arrow_back_24"/>
-
-        <TextView
-            android:text="Cobrar actividad"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="@color/blanco"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="80dp"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="4dp"/>
-
-    </LinearLayout>
+    <!-- HEADER -->
+    <include layout="@layout/header"/>
 
     <!-- Contenido central -->
     <ScrollView
@@ -203,10 +176,7 @@
 
     </ScrollView>
 
-    <!-- Barra inferior -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:background="@color/azul_principal"/>
+    <!-- Barra inferior dinámica -->
+    <include layout="@layout/footer" />
 
 </LinearLayout>

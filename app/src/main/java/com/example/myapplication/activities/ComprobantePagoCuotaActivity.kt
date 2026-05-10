@@ -2,15 +2,26 @@ package com.example.myapplication.activities
 
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.R
+import com.example.myapplication.utils.FooterManager
 
 class ComprobantePagoCuotaActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_comprobante_pago_cuota)
+
+        // BOTÓN REGRESAR (del header.xml)
+        val btnBack = findViewById<ImageButton>(R.id.btnBack)
+        val tvHeaderTitle = findViewById<TextView>(R.id.tvHeaderTitle)
+        
+        tvHeaderTitle?.text = "Comprobante de Cuota"
+        btnBack?.setOnClickListener {
+            finish()
+        }
 
         val tvNombre = findViewById<TextView>(R.id.tvNombre)
         val tvDni = findViewById<TextView>(R.id.tvDni)
@@ -39,5 +50,13 @@ class ComprobantePagoCuotaActivity : AppCompatActivity() {
             finish()
         }
 
+        // --- LÓGICA DEL FOOTER ---
+        FooterManager.setupFooter(
+            activity = this,
+            showWhiteBar = true,
+            showHome = true,
+            showSettings = true,
+            showLogout = true
+        )
     }
 }

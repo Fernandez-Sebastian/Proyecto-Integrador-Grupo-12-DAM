@@ -9,8 +9,8 @@ import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import com.example.myapplication.R
+import com.example.myapplication.utils.FooterManager
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import java.util.Date
@@ -39,15 +39,16 @@ class CobrarActividad : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cobrar_actividad)
 
-        //Volver al menú principal
+        // Configurar Header
         val btnBack = findViewById<ImageButton>(R.id.btnBack)
-        btnBack.setOnClickListener {
+        val tvHeaderTitle = findViewById<TextView>(R.id.tvHeaderTitle)
+        
+        tvHeaderTitle?.text = "Cobrar actividad"
+        btnBack?.setOnClickListener {
             finish()
         }
 
-
         //Buscar No Socio
-
         val inputDni = findViewById<TextInputEditText>(R.id.etBuscarDni)
         val textInputLayout = findViewById<TextInputLayout>(R.id.tilBuscarDni)
         val tvResultado = findViewById<TextView>(R.id.tvResultado)
@@ -146,5 +147,14 @@ class CobrarActividad : AppCompatActivity() {
 
             startActivity(intent)
         }
+
+        // --- LÓGICA DEL FOOTER ---
+        FooterManager.setupFooter(
+            activity = this,
+            showWhiteBar = true,
+            showHome = true,
+            showSettings = true,
+            showLogout = true
+        )
     }
 }

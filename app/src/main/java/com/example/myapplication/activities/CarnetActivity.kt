@@ -1,22 +1,31 @@
 package com.example.myapplication.activities
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.myapplication.R
+import com.example.myapplication.utils.FooterManager
 
 class CarnetActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_carnet)
+
+        // Configurar Header
+        val btnBack = findViewById<ImageButton>(R.id.btnBack)
+        val tvHeaderTitle = findViewById<TextView>(R.id.tvHeaderTitle)
+        
+        tvHeaderTitle?.text = "Carnet de Socio"
+        btnBack?.setOnClickListener {
+            finish()
+        }
 
         // Referencias de la UI para búsqueda
         val etBuscarDni = findViewById<EditText>(R.id.etBuscarDni)
@@ -55,32 +64,13 @@ class CarnetActivity : AppCompatActivity() {
             finish()
         }
 
-        findViewById<ImageView>(R.id.ivBack).setOnClickListener {
-            finish()
-        }
-
         // --- LÓGICA DEL FOOTER ---
-        val llCentro = findViewById<LinearLayout>(R.id.ll_footer_centro)
-        val ivHome = findViewById<ImageView>(R.id.iv_home)
-        val ivSettings = findViewById<ImageView>(R.id.iv_settings)
-        val ivLogout = findViewById<ImageView>(R.id.iv_logout)
-
-        // En el Carnet: franja blanca y los 3 iconos
-        llCentro.visibility = View.VISIBLE
-        ivHome.visibility = View.VISIBLE
-        ivSettings.visibility = View.VISIBLE
-        ivLogout.visibility = View.VISIBLE
-
-        // Navegación del footer
-        ivHome.setOnClickListener {
-            val intent = Intent(this, MenuActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-            startActivity(intent)
-        }
-
-        ivLogout.setOnClickListener {
-            val intent = Intent(this, LogoutActivity::class.java)
-            startActivity(intent)
-        }
+        FooterManager.setupFooter(
+            activity = this,
+            showWhiteBar = true,
+            showHome = true,
+            showSettings = true,
+            showLogout = true
+        )
     }
 }
