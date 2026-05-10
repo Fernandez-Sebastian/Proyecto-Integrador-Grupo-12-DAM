@@ -15,6 +15,9 @@ class MenuActivity : AppCompatActivity() {
         val btn = findViewById<Button>(R.id.btnCobrarActividad)
         val tvSaludo = findViewById<TextView>(R.id.tvSaludo)
 
+        val btnVerVencimientos = findViewById<Button>(R.id.btnVerVencimientos)
+        val btnRegistrarSocio = findViewById<Button>(R.id.btnRegistrarSocio)
+
         // Traemos el Usuario desde el login para mostrarlo
         val nombreUsuario = intent.getStringExtra("usuario")
         tvSaludo.text = "Hola, $nombreUsuario"
@@ -37,6 +40,16 @@ class MenuActivity : AppCompatActivity() {
 
         btn.setOnClickListener {
             val intent = Intent(this, CobrarActividad::class.java)
+            startActivity(intent)
+        }
+
+        btnVerVencimientos.setOnClickListener {
+            val intent = Intent(this, VencimientosActivity::class.java)
+            startActivity(intent)
+        }
+
+        btnRegistrarSocio.setOnClickListener {
+            val intent = Intent(this, RegistrarSocioActivity::class.java)
             startActivity(intent)
         }
     }
