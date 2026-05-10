@@ -29,18 +29,17 @@ class CarnetActivity : AppCompatActivity() {
             val dni = etBuscarDni.text.toString().trim()
             
             if (dni == "1234567") {
-                // Estilo Toast como en el botón descargar
                 Toast.makeText(this, getString(R.string.socio_encontrado), Toast.LENGTH_SHORT).show()
                 
-                // Mostramos el carnet inmediatamente
+                // Mostrar carnet
                 tvMensajeBusqueda.visibility = View.GONE
                 clContenidoSocio.visibility = View.VISIBLE
                 
             } else if (dni.isNotEmpty()) {
-                // Estilo Toast para socio inexistente
+                // Toast para socio inexistente
                 Toast.makeText(this, getString(R.string.socio_inexistente), Toast.LENGTH_SHORT).show()
                 
-                // Mantenemos el estado inicial
+                // Estado inicial
                 tvMensajeBusqueda.visibility = View.VISIBLE
                 clContenidoSocio.visibility = View.GONE
             }
@@ -66,7 +65,7 @@ class CarnetActivity : AppCompatActivity() {
         val ivSettings = findViewById<ImageView>(R.id.iv_settings)
         val ivLogout = findViewById<ImageView>(R.id.iv_logout)
 
-        // En el Carnet: Mostramos la franja blanca y los 3 iconos
+        // En el Carnet: franja blanca y los 3 iconos
         llCentro.visibility = View.VISIBLE
         ivHome.visibility = View.VISIBLE
         ivSettings.visibility = View.VISIBLE
