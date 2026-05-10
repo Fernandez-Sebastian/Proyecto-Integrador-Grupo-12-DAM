@@ -15,6 +15,8 @@ import android.content.Intent
 
 class CobrarCuotaActivity : AppCompatActivity() {
 
+    private lateinit var btnBack: ImageButton
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cobrar_cuota)
@@ -39,6 +41,12 @@ class CobrarCuotaActivity : AppCompatActivity() {
         val btnVolverMenu = findViewById<Button>(R.id.btnVolverMenu)
 
         val btnVerComprobante = findViewById<Button>(R.id.btnVerComprobante)
+
+        btnBack = findViewById(R.id.btnBack)
+
+        btnBack.setOnClickListener {
+            finish()
+        }
 
         // OCULTO LOS BOTONES AL INICIO
         spMetodoPago.visibility = View.GONE

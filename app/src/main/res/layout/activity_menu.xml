@@ -7,7 +7,23 @@
     android:background="@color/fondo_app">
 
     <!-- HEADER -->
-    <include layout="@layout/header"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@color/azul_principal">
+
+        <TextView
+            android:text="Sistema Club"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/blanco"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="130dp"/>
+    </LinearLayout>
 
     <!-- CONTENIDO  TOTAL-->
     <ScrollView
@@ -21,26 +37,16 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- Título -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Sistema Club"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:textColor="@color/gris_texto"/>
+             <TextView
+                 android:id="@+id/tvSaludo"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:text="Hola"
+                 android:gravity="center"
+                 android:textColor="@color/gris_texto"
+                 android:layout_marginBottom="10dp"/>
 
-            <TextView
-                android:id="@+id/tvSaludo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Hola"
-                android:gravity="center"
-                android:textColor="@color/gris_texto"
-                android:layout_marginBottom="10dp"/>
-
-            <!-- ALERTA -->
+             <!-- ALERTA -->
             <TextView
                 android:id="@+id/tvAlerta"
                 android:layout_width="match_parent"
@@ -128,6 +134,17 @@
                     android:textColor="@color/texto_boton"
                     android:text="Imprimir Carnet"/>
             </LinearLayout>
+
+            <Button
+                android:id="@+id/btnSalir"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:text="Salir del Programa"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/fondo_app"
+                android:textColor="@color/texto_oscuro"/>
 
         </LinearLayout>
 

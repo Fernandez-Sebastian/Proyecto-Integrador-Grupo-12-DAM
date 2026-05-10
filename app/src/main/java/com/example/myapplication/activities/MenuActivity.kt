@@ -13,19 +13,18 @@ class MenuActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
 
+        val tvSaludo = findViewById<TextView>(R.id.tvSaludo)
+        val tvAlerta = findViewById<TextView>(R.id.tvAlerta)
+
         val btnCobrarActividad = findViewById<Button>(R.id.btnCobrarActividad)
         val btnCobrarCuota = findViewById<Button>(R.id.btnCobrarCuota)
-
-        val tvSaludo = findViewById<TextView>(R.id.tvSaludo)
-
         val btnVerVencimientos = findViewById<Button>(R.id.btnVerVencimientos)
         val btnRegistrarSocio = findViewById<Button>(R.id.btnRegistrarSocio)
+        val btnSalir = findViewById<Button>(R.id.btnSalir)
 
         // Traemos el Usuario desde el login para mostrarlo
         val nombreUsuario = intent.getStringExtra("usuario")
         tvSaludo.text = "Hola, $nombreUsuario"
-
-        val tvAlerta = findViewById<TextView>(R.id.tvAlerta)
 
         // Alert de Vencimiento
         // to do Manejo de la variable hayVencimientos por medio de una consulta a la base de datos
@@ -67,6 +66,12 @@ class MenuActivity : AppCompatActivity() {
         btnRegistrarSocio.setOnClickListener {
             val intent = Intent(this, RegistrarSocioActivity::class.java)
             startActivity(intent)
+        }
+
+        btnSalir.setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
         }
     }
 }
