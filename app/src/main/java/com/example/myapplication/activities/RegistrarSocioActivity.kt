@@ -89,16 +89,18 @@ class RegistrarSocioActivity : AppCompatActivity() {
         btnImprimirCarnet.setOnClickListener {
             val socio = socioIngresado
 
-            if (socio == null) {
+            /*if (socio == null) {
                 Toast.makeText(
                     this,
                     "Primero debe registrar un socio.",
                     Toast.LENGTH_SHORT
                 ).show()
-            }
+            }*/
             //completar luego para abrir CarnetActivity
             //para abrir con los datos del socio registrado
             //revisar primero si podemos con datos sino abrir sin datos para que quede el flujo
+            val intent = Intent(this, CarnetActivity::class.java)
+            startActivity(intent)
         }
     }
 
