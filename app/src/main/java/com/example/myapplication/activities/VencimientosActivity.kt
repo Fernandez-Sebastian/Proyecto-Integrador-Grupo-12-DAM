@@ -34,6 +34,7 @@ class VencimientosActivity : AppCompatActivity() {
         val estado: EstadoVencimiento
     )
 
+    //Por ahora simulamos con 4 socios fijos y luego se traeran los socios de base de datos
     private val vencimientosSocios = listOf(
         VencimientoSocio("Glaucia Ferreira", "95789456", EstadoVencimiento.VENCIDO),
         VencimientoSocio("Andrea Maslucan", "95639789", EstadoVencimiento.AL_DIA),

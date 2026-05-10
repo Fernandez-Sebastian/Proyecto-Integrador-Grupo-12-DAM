@@ -78,6 +78,11 @@ class CobrarCuotaActivity : AppCompatActivity() {
                 tvMonto.text = "$ 00.00"
                 Toast.makeText(this,"Debe ingresar un DNI",Toast.LENGTH_SHORT).show()
             } else {
+                /*
+                    SOCIOS HARDCODEADOS
+                    123456 -> Tiene deuda
+                    7322 -> No tiene deuda
+                */
                 if (dni == "123456") {
                     spMetodoPago.visibility = View.VISIBLE
                     btnCobrar.visibility = View.VISIBLE
@@ -98,7 +103,7 @@ class CobrarCuotaActivity : AppCompatActivity() {
                     tvDniSocio.text = ""
                     tvEstadoSocio.text = ""
                     tvMonto.text = "$ 00.00"
-                    Toast.makeText(this,"No se encontró el socio",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this,"No se encontró el socio. Debe darlo de alta como nuevo Socio",Toast.LENGTH_SHORT).show()
                 }
             }
         }
