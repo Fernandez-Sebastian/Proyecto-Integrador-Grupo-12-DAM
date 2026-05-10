@@ -4,7 +4,10 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.R
 import android.content.Intent
+import android.view.View
 import android.widget.Button
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 
 class MenuActivity : AppCompatActivity() {
@@ -21,6 +24,7 @@ class MenuActivity : AppCompatActivity() {
         val btnVerVencimientos = findViewById<Button>(R.id.btnVerVencimientos)
         val btnRegistrarSocio = findViewById<Button>(R.id.btnRegistrarSocio)
         val btnSalir = findViewById<Button>(R.id.btnSalir)
+        val btnCarnet= findViewById<Button>(R.id.btnCarnet)
 
         // Traemos el Usuario desde el login para mostrarlo
         val nombreUsuario = intent.getStringExtra("usuario")
@@ -72,6 +76,30 @@ class MenuActivity : AppCompatActivity() {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             finish()
+        }
+        btnCarnet.setOnClickListener {
+            val intent = Intent(this, CarnetActivity::class.java)
+            intent.putExtra("usuario", nombreUsuario)
+            startActivity(intent)
+        }
+
+        // --- LÓGICA DEL FOOTER ---
+        val llCentro = findViewById<LinearLayout>(R.id.ll_footer_centro)
+        val ivHome = findViewById<ImageView>(R.id.iv_home)
+        val ivSettings = findViewById<ImageView>(R.id.iv_settings)
+        val ivLogout = findViewById<ImageView>(R.id.iv_logout)
+
+        // Mostrar la franja blanca
+        llCentro.visibility = View.VISIBLE
+        
+        // En el Menú: No aparece Home. Aparecen Settings y Logout.
+        ivHome.visibility = View.GONE
+        ivSettings.visibility = View.VISIBLE
+        ivLogout.visibility = View.VISIBLE
+
+        ivLogout.setOnClickListener {
+            val intent = Intent(this, LogoutActivity::class.java)
+            startActivity(intent)
         }
     }
 }

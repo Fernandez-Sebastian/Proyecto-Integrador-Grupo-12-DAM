@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fondo_app"
+    android:orientation="vertical"
+    tools:context=".activities.CarnetActivity">
+
+    <!-- Header -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@color/azul_principal">
+
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="16dp"
+            android:contentDescription="@string/desc_volver"
+            android:padding="8dp"
+            android:src="@drawable/baseline_arrow_back_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@android:color/white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/carnet_titulo"
+            android:textColor="@android:color/white"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="@string/buscar_socio"
+                android:textColor="@color/negro"
+                android:textStyle="bold" />
+
+            <!-- Buscador -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginBottom="32dp"
+                android:background="@android:drawable/edit_text"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="12dp">
+
+                <EditText
+                    android:id="@+id/etBuscarDni"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:autofillHints="postalCode"
+                    android:background="@null"
+                    android:hint="@string/hint_dni"
+                    android:inputType="number"
+                    android:textColor="@color/negro"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/ivLupa"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:contentDescription="@string/desc_buscar"
+                    android:src="@android:drawable/ic_menu_search"
+                    app:tint="@color/gris_texto" />
+
+            </LinearLayout>
+
+            <!-- Card del Carnet -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="8dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="150dp"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:id="@+id/tvClubNombre"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/club_deportivo"
+                        android:textColor="#4A7BD1"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <!-- Mensaje inicial -->
+                    <TextView
+                        android:id="@+id/tvMensajeBusqueda"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/mensaje_busqueda_inicial"
+                        android:textColor="@color/gris_texto"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvClubNombre" />
+
+                    <!-- Contenedor del Socio (Oculto por defecto) -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/clContenidoSocio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        app:layout_constraintTop_toBottomOf="@id/tvClubNombre">
+
+                        <TextView
+                            android:id="@+id/tvNombreSocio"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginEnd="8dp"
+                            android:text="@string/juan_perez"
+                            android:textColor="@color/negro"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toStartOf="@+id/ivFotoPerfil"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tvDniSocio"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/dni_juan"
+                            android:textColor="@color/negro"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/tvNombreSocio" />
+
+                        <ImageView
+                            android:id="@+id/ivFotoPerfil"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:contentDescription="@string/desc_foto_perfil"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/img_1_user_1_goku"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/tvNombreSocio" />
+
+                        <TextView
+                            android:id="@+id/tvVencimiento"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:text="@string/vencimiento_juan"
+                            android:textColor="@color/gris_texto"
+                            android:textSize="14sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/tvDniSocio" />
+
+                        <ImageView
+                            android:id="@+id/ivBarcode"
+                            android:layout_width="140dp"
+                            android:layout_height="50dp"
+                            android:layout_marginTop="8dp"
+                            android:contentDescription="@string/desc_codigo_barras"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/img_2_barcode"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/tvVencimiento" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- Botones de Acción -->
+            <Button
+                android:id="@+id/btnImprimir"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="40dp"
+                android:backgroundTint="@color/verde_boton"
+                android:elevation="4dp"
+                android:text="@string/imprimir_carnet"
+                android:textAllCaps="false"
+                android:textSize="18sp"
+                app:cornerRadius="15dp" />
+
+            <Button
+                android:id="@+id/btnVolverInicio"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_marginTop="20dp"
+                android:paddingHorizontal="32dp"
+                android:text="@string/volver_al_inicio"
+                android:textAllCaps="false"
+                android:textColor="#4A7BD1"
+                android:textSize="16sp"
+                app:cornerRadius="12dp"
+                app:strokeColor="#4A7BD1"
+                app:strokeWidth="2dp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Footer -->
+    <include layout="@layout/footer" />
+
+</LinearLayout>
