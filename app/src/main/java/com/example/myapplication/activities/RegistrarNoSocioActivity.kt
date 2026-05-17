@@ -18,6 +18,14 @@ import java.util.Locale
 
 class RegistrarNoSocioActivity : AppCompatActivity() {
 
+    private lateinit var btnBack: ImageButton
+    private lateinit var etNombre: TextInputEditText
+    private lateinit var etApellido: TextInputEditText
+    private lateinit var etDni: TextInputEditText
+    private lateinit var etFechaNac: TextInputEditText
+    private lateinit var switchApto: Switch
+    private lateinit var btnRegistrar: Button
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registrar_no_socio)
@@ -31,47 +39,16 @@ class RegistrarNoSocioActivity : AppCompatActivity() {
             finish()
         }
 
-        val etNombre = findViewById<TextInputEditText>(R.id.etNombre)
-        val etApellido = findViewById<TextInputEditText>(R.id.etApellido)
-        val etDni = findViewById<TextInputEditText>(R.id.etDni)
-        val etFechaNac = findViewById<TextInputEditText>(R.id.etFecha)
-        val switchApto = findViewById<Switch>(R.id.switchApto)
-        val btnRegistrar = findViewById<Button>(R.id.btnRegistrar)
+        etNombre = findViewById<TextInputEditText>(R.id.etNombre)
+        etApellido = findViewById<TextInputEditText>(R.id.etApellido)
+        etDni = findViewById<TextInputEditText>(R.id.etDni)
+        etFechaNac = findViewById<TextInputEditText>(R.id.etFecha)
+        switchApto = findViewById<Switch>(R.id.switchApto)
+        btnRegistrar = findViewById<Button>(R.id.btnRegistrar)
 
         //Registrar al No Socio
         btnRegistrar.setOnClickListener {
-
-            val nombre = etNombre.text.toString()
-            val apellido = etApellido.text.toString()
-            val dni = etDni.text.toString()
-            val fechaNacimiento = etFechaNac.text.toString()
-
-            val aptoMedico = if (switchApto.isChecked) "Sí" else "No"
-
-            val fecha = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
-            val hora = SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date())
-
-            val nombreCompleto = "$nombre $apellido"
-
-
-            val dialogView = layoutInflater.inflate(R.layout.dialog_registro_exitoso, null)
-
-            val tv = dialogView.findViewById<TextView>(R.id.tvRegistro)
-
-            tv.text = """
-            No Socio: $nombreCompleto
-            DNI: $dni
-            Fecha: $fecha
-            Hora: $hora
-            F. nac.: $fechaNacimiento
-            Apto médico: $aptoMedico
-            """.trimIndent()
-
-            val dialog = AlertDialog.Builder(this)
-                .setView(dialogView)
-                .create()
-
-            dialog.show()
+            RegistrarNoSocio()
         }
 
         //Elegir fecha en calendario
@@ -106,5 +83,90 @@ class RegistrarNoSocioActivity : AppCompatActivity() {
             showSettings = true,
             showLogout = true
         )
+    }
+
+    private fun RegistrarNoSocio(){
+        val nombre = etNombre.text.toString()
+        val apellido = etApellido.text.toString()
+        val dni = etDni.text.toString()
+        val fechaNacimiento = etFechaNac.text.toString()
+        var aptoMedico = switchApto.isChecked
+
+        if (!validarDatosNoSocio(nombre, apellido, dni, fechaNacimiento)) {
+            return
+        }
+
+        val tvAptoMedico = if (switchApto.isChecked) "Sí" else "No"
+
+        val fecha = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
+        val hora = SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date())
+
+        val nombreCompleto = "$nombre $apellido"
+
+
+        val dialogView = layoutInflater.inflate(R.layout.dialog_registro_exitoso, null)
+
+        val tv = dialogView.findViewById<TextView>(R.id.tvRegistro)
+
+        tv.text = """
+            No Socio: $nombreCompleto
+            DNI: $dni
+            Fecha: $fecha
+            Hora: $hora
+            F. nac.: $fechaNacimiento
+            Apto médico: $tvAptoMedico
+            """.trimIndent()
+
+        val dialog = AlertDialog.Builder(this)
+            .setView(dialogView)
+            .create()
+
+        dialog.show()
+    }
+
+    fun validarDatosNoSocio(
+        nombre: String,
+        apellido: String,
+        dni: String,
+        fechaNacimiento: String
+    ): Boolean {
+        etNombre.error = null
+        etApellido.error = null
+        etDni.error = null
+        etFechaNac.error = null
+
+        if (nombre.isEmpty()) {
+            etNombre.error = "Ingrese el nombre"
+            return false
+        }
+        if (apellido.isEmpty()) {
+            etApellido.error = "Ingrese el apellido"
+            return false
+        }
+        if (dni.isEmpty()) {
+            etDni.error = "Ingrese el DNI"
+            return false
+        }
+        if (fechaNacimiento.isEmpty() || fechaNacimiento == "dd/mm/aaaa") {
+            etFechaNac.error = "Ingrese la fecha de nacimiento"
+            return false
+        }
+        if (!switchApto.isChecked) {
+            mostrarDialogo(
+                titulo = "Apto médico requerido",
+                mensaje = "El no socio debe tener apto médico para registrarse."
+            )
+            return false
+        }
+        //faltan validaciones de dni valido, edad valida, etc
+        return true
+    }
+
+    private fun mostrarDialogo(titulo: String, mensaje: String) {
+        AlertDialog.Builder(this)
+            .setTitle(titulo)
+            .setMessage(mensaje)
+            .setPositiveButton("Aceptar", null)
+            .show()
     }
 }
