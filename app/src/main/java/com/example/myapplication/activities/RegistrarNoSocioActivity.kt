@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.R
+import com.example.myapplication.activities.RegistrarSocioActivity.Socio
 import com.example.myapplication.utils.FooterManager
 import com.google.android.material.textfield.TextInputEditText
 import java.util.Date
@@ -26,12 +27,20 @@ class RegistrarNoSocioActivity : AppCompatActivity() {
     private lateinit var switchApto: Switch
     private lateinit var btnRegistrar: Button
 
+    private data class NoSocio(
+        val nombre: String,
+        val apellido: String,
+        val dni: String,
+        val fechaNacimiento: String,
+        val aptoMedico: Boolean
+    )
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registrar_no_socio)
 
         // Configurar Header
-        val btnBack = findViewById<ImageButton>(R.id.btnBack)
+        btnBack = findViewById<ImageButton>(R.id.btnBack)
         val tvHeaderTitle = findViewById<TextView>(R.id.tvHeaderTitle)
         
         tvHeaderTitle?.text = "Registrar No Socio"
@@ -86,35 +95,35 @@ class RegistrarNoSocioActivity : AppCompatActivity() {
     }
 
     private fun RegistrarNoSocio(){
-        val nombre = etNombre.text.toString()
-        val apellido = etApellido.text.toString()
-        val dni = etDni.text.toString()
-        val fechaNacimiento = etFechaNac.text.toString()
-        var aptoMedico = switchApto.isChecked
+        val noSocio = NoSocio(
+            nombre = etNombre.text.toString(),
+            apellido = etApellido.text.toString(),
+            dni = etDni.text.toString(),
+            fechaNacimiento = etFechaNac.text.toString(),
+            aptoMedico = switchApto.isChecked
+        )
 
-        if (!validarDatosNoSocio(nombre, apellido, dni, fechaNacimiento)) {
+        if (!validarDatosNoSocio(noSocio.nombre, noSocio.apellido, noSocio.dni,
+                noSocio.fechaNacimiento)) {
             return
         }
 
-        val tvAptoMedico = if (switchApto.isChecked) "Sí" else "No"
+        val tvAptoMedico = if (noSocio.aptoMedico) "Sí" else "No"
 
         val fecha = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
         val hora = SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date())
-
-        val nombreCompleto = "$nombre $apellido"
-
 
         val dialogView = layoutInflater.inflate(R.layout.dialog_registro_exitoso, null)
 
         val tv = dialogView.findViewById<TextView>(R.id.tvRegistro)
 
         tv.text = """
-            No Socio: $nombreCompleto
-            DNI: $dni
+            No Socio: ${noSocio.nombre} ${noSocio.apellido}
+            DNI: ${noSocio.dni}
+            F. Nac.: ${noSocio.fechaNacimiento}
+            Apto médico: $tvAptoMedico
             Fecha: $fecha
             Hora: $hora
-            F. nac.: $fechaNacimiento
-            Apto médico: $tvAptoMedico
             """.trimIndent()
 
         val dialog = AlertDialog.Builder(this)
@@ -124,7 +133,7 @@ class RegistrarNoSocioActivity : AppCompatActivity() {
         dialog.show()
     }
 
-    fun validarDatosNoSocio(
+    private fun validarDatosNoSocio(
         nombre: String,
         apellido: String,
         dni: String,
