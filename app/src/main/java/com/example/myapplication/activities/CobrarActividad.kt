@@ -9,6 +9,7 @@ import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import com.example.myapplication.R
 import com.example.myapplication.utils.FooterManager
 import com.google.android.material.textfield.TextInputEditText
@@ -117,12 +118,27 @@ class CobrarActividad : AppCompatActivity() {
 
         btnCobrar.setOnClickListener {
 
+            if (resultadoActual == null) {
+                Toast.makeText(this, "Debe ingresar un No Socio válido", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             val resultado = resultadoActual ?: return@setOnClickListener
 
             val nombre = resultado.nombre
             val dni = resultado.dni
+
+            if (autoCompleteActividad.text.isNullOrBlank()) {
+                Toast.makeText(this, "Debe seleccionar una actividad", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             val actividad = autoCompleteActividad.text.toString()
             val medioPago = autoCompleteMedioPago.text.toString()
+
+            if (autoCompleteMedioPago.text.isNullOrBlank()) {
+                Toast.makeText(this, "Debe seleccionar un medio de pago", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             val precioTexto = tvPrecio.text.toString()
             val fecha = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
             val hora = SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date())
