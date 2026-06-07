@@ -18,26 +18,20 @@ import java.util.Locale
 
 class CobrarActividad : AppCompatActivity() {
 
+    private lateinit var dbHelper: SQLiteHelper
     data class NoSocio(
         val dni: String,
         val nombre: String
     )
 
-    private val noSocios = listOf(
-        NoSocio("22345678", "Juan Pérez"),
-        NoSocio("30111222", "María Gómez"),
-        NoSocio("33444555", "Carlos López")
-    )
-
     private var resultadoActual: NoSocio? = null
-
-    private fun buscarNoSocioPorDni(dni: String): NoSocio? {
-        return noSocios.find { it.dni == dni }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cobrar_actividad)
+
+        //Instancia a la BD
+        dbHelper = SQLiteHelper(this)
 
         // Configurar Header
         val btnBack = findViewById<ImageButton>(R.id.btnBack)
@@ -55,11 +49,14 @@ class CobrarActividad : AppCompatActivity() {
 
         textInputLayout.setEndIconOnClickListener {
             val dni = inputDni.text.toString()
-            resultadoActual = buscarNoSocioPorDni(dni)
+            val resultado = dbHelper.buscarNoSocioPorDni(dni)
 
-            if (resultadoActual != null) {
-                tvResultado.text = "${resultadoActual!!.nombre}\nDNI: ${resultadoActual!!.dni}"
+            if (resultado != null) {
+                val (nombre, apellido) = resultado
+                resultadoActual = NoSocio(dni, "$nombre $apellido")
+                tvResultado.text = "$nombre $apellido\nDNI: $dni"
             } else {
+                resultadoActual = null
                 tvResultado.text = "No Socio no encontrado"
             }
         }
@@ -68,7 +65,9 @@ class CobrarActividad : AppCompatActivity() {
         //Seleccionar actividad
         val autoCompleteActividad = findViewById<AutoCompleteTextView>(R.id.seleccionarActividad)
 
-        val itemsActividad = listOf("Fútbol", "Padle", "Yoga")
+        val actividades = dbHelper.obtenerActividades()
+        val itemsActividad = actividades.map { it.first }
+        val precios = actividades.associate { it.first to it.third }
 
         val adapterActividad = ArrayAdapter(
             this,
@@ -80,20 +79,13 @@ class CobrarActividad : AppCompatActivity() {
 
         val actividadSelecionada = autoCompleteActividad.text.toString()
 
-        //Precios
-        val precios = mapOf(
-            "Fútbol" to 10000,
-            "Padle" to 20000,
-            "Yoga" to 15000
-        )
-
         val tvPrecio = findViewById<TextView>(R.id.tvPrecio)
 
         autoCompleteActividad.setOnItemClickListener { parent, _, position, _ ->
             val actividad = parent.getItemAtPosition(position).toString()
-            val precio = precios[actividad] ?: 0
+            val precio = precios[actividad] ?: 0.0
 
-            tvPrecio.text = "$ ${"%,d".format(precio)}"
+            tvPrecio.text = "$ ${"%,.2f".format(precio)}"
         }
 
         //Seleccionar medio de pago

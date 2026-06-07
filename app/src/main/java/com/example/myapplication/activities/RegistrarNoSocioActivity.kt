@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Switch
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.R
@@ -26,6 +27,7 @@ class RegistrarNoSocioActivity : AppCompatActivity() {
     private lateinit var etFechaNac: TextInputEditText
     private lateinit var switchApto: Switch
     private lateinit var btnRegistrar: Button
+    private lateinit var dbHelper: SQLiteHelper
 
     private data class NoSocio(
         val nombre: String,
@@ -38,6 +40,9 @@ class RegistrarNoSocioActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registrar_no_socio)
+
+        //Instancia a la BD
+        dbHelper = SQLiteHelper(this)
 
         // Configurar Header
         btnBack = findViewById<ImageButton>(R.id.btnBack)
@@ -129,6 +134,20 @@ class RegistrarNoSocioActivity : AppCompatActivity() {
         val dialog = AlertDialog.Builder(this)
             .setView(dialogView)
             .create()
+
+        if (dbHelper.existeNoSocioPorDni(noSocio.dni)) {
+            Toast.makeText(this, "El No Socio ya se encuentra registrado",
+            Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        dbHelper.insertarNoSocio(
+            nombre = noSocio.nombre,
+            apellido = noSocio.apellido,
+            dni = noSocio.dni,
+            fechaNacimiento = noSocio.fechaNacimiento,
+            aptoMedico = if (noSocio.aptoMedico) 1 else 0
+        )
 
         dialog.show()
     }
