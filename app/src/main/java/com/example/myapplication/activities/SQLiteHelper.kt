@@ -12,14 +12,13 @@ import java.util.Locale
 // Data class para el estado de cuota
 data class EstadoCuota(
     val tieneDeuda: Boolean,
-    val estado: String, // "Vencido", "Al día", "Próximo a vencer"
+    val estado: String,
     val monto: Double,
     val idCuota: Int?,
     val diasRestantes: Int?,
     val fechaVencimiento: String?
 )
 
-// Data class para reemplazar Triple
 data class ActividadInfo(val nombre: String, val dia: String, val precio: Double)
 data class VencimientoInfo(val nombreCompleto: String, val dni: String, val estado: String)
 
@@ -163,10 +162,7 @@ class SQLiteHelper(context: Context) : SQLiteOpenHelper(context, "clubdeportivo.
 
     fun buscarUsuario(codUsu: Int): Cursor {
         val db = readableDatabase
-        return db.rawQuery(
-            "SELECT * FROM usuarios WHERE CodUsu = ?",
-            arrayOf(codUsu.toString())
-        )
+        return db.rawQuery("SELECT * FROM usuarios WHERE CodUsu = ?", arrayOf(codUsu.toString()))
     }
 
     fun eliminarUsuario(codUsu: Int): Int {
@@ -279,11 +275,7 @@ class SQLiteHelper(context: Context) : SQLiteOpenHelper(context, "clubdeportivo.
 
     fun existeSocioPorDni(dni: String): Boolean {
         val db = readableDatabase
-        val cursor = db.rawQuery(
-            "SELECT id_socio FROM Socios WHERE dni = ?",
-            arrayOf(dni)
-        )
-
+        val cursor = db.rawQuery("SELECT id_socio FROM Socios WHERE dni = ?", arrayOf(dni))
         val existe = cursor.count > 0
         cursor.close()
         return existe
@@ -292,19 +284,8 @@ class SQLiteHelper(context: Context) : SQLiteOpenHelper(context, "clubdeportivo.
     fun buscarIdSocioPorDni(dni: String): Int? {
 
         val db = readableDatabase
-
-        val cursor = db.rawQuery(
-            "SELECT id_socio FROM Socios WHERE dni = ? "
-                .trimIndent(),
-            arrayOf(dni)
-        )
-
-        val idSocio = if (cursor.moveToFirst()) {
-            cursor.getInt(0)
-        } else {
-            null
-        }
-
+        val cursor = db.rawQuery("SELECT id_socio FROM Socios WHERE dni = ?", arrayOf(dni))
+        val idSocio = if (cursor.moveToFirst()) cursor.getInt(0) else null
         cursor.close()
 
         return idSocio
@@ -316,12 +297,8 @@ class SQLiteHelper(context: Context) : SQLiteOpenHelper(context, "clubdeportivo.
         val db = writableDatabase
 
         val formatoFecha = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-
-        val fechaEmisionCalendar = Calendar.getInstance()
-        val fechaEmision = formatoFecha.format(fechaEmisionCalendar.time)
-
-        val fechaVencimientoCalendar = Calendar.getInstance()
-        fechaVencimientoCalendar.add(Calendar.YEAR, 1)
+        val fechaEmision = formatoFecha.format(Calendar.getInstance().time)
+        val fechaVencimientoCalendar = Calendar.getInstance().apply { add(Calendar.YEAR, 1) }
         val fechaVencimiento = formatoFecha.format(fechaVencimientoCalendar.time)
 
         val valores = ContentValues()
@@ -329,23 +306,20 @@ class SQLiteHelper(context: Context) : SQLiteOpenHelper(context, "clubdeportivo.
         valores.put("fecha_vencimiento", fechaVencimiento)
         valores.put("numero", numero)
         valores.put("id_socio", idSocio)
-
         return db.insert("Carnet", null, valores)
     }
 
     fun existeCarnetSocio(dni: String): Boolean {
 
         val db = readableDatabase
-
         val cursor = db.rawQuery(
             """
-                    SELECT 1
-                    FROM Carnet c
-                    INNER JOIN Socios s
-                        ON c.id_socio = s.id
-                    WHERE s.dni = ?
-                    LIMIT 1
-                """.trimIndent(),
+                SELECT 1
+                FROM Carnet c
+                INNER JOIN Socios s ON c.id_socio = s.id_socio
+                WHERE s.dni = ?
+                LIMIT 1
+            """.trimIndent(),
             arrayOf(dni)
         )
 
@@ -362,16 +336,14 @@ class SQLiteHelper(context: Context) : SQLiteOpenHelper(context, "clubdeportivo.
         val db = writableDatabase
 
         val formatoFecha = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-
-        val fechaInicioCalendar = Calendar.getInstance()
-        val fechaFinCalendar = Calendar.getInstance()
-        fechaFinCalendar.add(Calendar.MONTH, 1)
-
+        val fechaInicio = formatoFecha.format(Calendar.getInstance().time)
+        val fechaFinCalendar = Calendar.getInstance().apply { add(Calendar.MONTH, 1) }
+        val fechaFin = formatoFecha.format(fechaFinCalendar.time)
         val valores = ContentValues()
         valores.put("numero_cuota", 1)
         valores.putNull("fecha_pago")
-        valores.put("fecha_inicio", formatoFecha.format(fechaInicioCalendar.time))
-        valores.put("fecha_fin", formatoFecha.format(fechaFinCalendar.time))
+        valores.put("fecha_inicio", fechaInicio)
+        valores.put("fecha_fin", fechaFin)
         valores.put("monto", 45000.0)
         valores.putNull("metodo_pago")
         valores.put("vigente", "S")
@@ -388,20 +360,19 @@ class SQLiteHelper(context: Context) : SQLiteOpenHelper(context, "clubdeportivo.
 
         val cursor = db.rawQuery(
             """
-            SELECT 1
-            FROM Cuota c
-            INNER JOIN Socios s
-                ON c.id_socio = s.id_socio
-            WHERE c.estado = 'Impaga'
-                AND date(c.fecha_fin) <= date('now', 'localtime')
-                AND NOT EXISTS (
-                    SELECT 1
-                    FROM Cuota cf
-                    WHERE cf.id_socio = s.id_socio
-                        AND date(cf.fecha_fin) > date('now', 'localtime')
-                        AND cf.estado = 'Paga'
-                )
-            LIMIT 1
+                SELECT 1
+                FROM Cuota c
+                INNER JOIN Socios s ON c.id_socio = s.id_socio
+                WHERE c.estado = 'Impaga'
+                    AND date(c.fecha_fin) <= date('now', 'localtime')
+                    AND NOT EXISTS (
+                        SELECT 1
+                        FROM Cuota cf
+                        WHERE cf.id_socio = s.id_socio
+                            AND date(cf.fecha_fin) > date('now', 'localtime')
+                            AND cf.estado = 'Paga'
+                    )
+                LIMIT 1
             """.trimIndent(),
             null
         )
@@ -415,7 +386,6 @@ class SQLiteHelper(context: Context) : SQLiteOpenHelper(context, "clubdeportivo.
 
     fun obtenerVencimientosSocios(): List<Triple<String, String, String>> {
         val db = readableDatabase
-
         val cursor = db.rawQuery(
             """
                 SELECT 
@@ -435,24 +405,16 @@ class SQLiteHelper(context: Context) : SQLiteOpenHelper(context, "clubdeportivo.
                         ELSE 'Al día'
                     END AS estado_visual
                 FROM Socios s
-                INNER JOIN Cuota c 
-                    ON c.id_socio = s.id_socio
+                INNER JOIN Cuota c ON c.id_socio = s.id_socio
                 WHERE c.vigente = 'S'
                 ORDER BY s.apellido, s.nombre
             """.trimIndent(),
             null
         )
-
         val lista = mutableListOf<Triple<String, String, String>>()
-
         while (cursor.moveToNext()) {
-            val nombreCompleto = cursor.getString(0)
-            val dni = cursor.getString(1)
-            val estado = cursor.getString(2)
-
-            lista.add(Triple(nombreCompleto, dni, estado))
+            lista.add(Triple(cursor.getString(0), cursor.getString(1), cursor.getString(2)))
         }
-
         cursor.close()
         return lista
     }
@@ -469,7 +431,6 @@ class SQLiteHelper(context: Context) : SQLiteOpenHelper(context, "clubdeportivo.
             """.trimIndent(),
             arrayOf(idSocio.toString())
         )
-
         return if (cursor.moveToFirst()) {
             val idCuota = cursor.getInt(0)
             val monto = cursor.getDouble(1)
@@ -488,45 +449,23 @@ class SQLiteHelper(context: Context) : SQLiteOpenHelper(context, "clubdeportivo.
             put("metodo_pago", metodoPago)
             put("estado", "Paga")
         }
-
         val rowsAffected = db.update("Cuota", valores, "id_cuota = ?", arrayOf(idCuota.toString()))
         return rowsAffected > 0
     }
 
     fun generarSiguienteCuota(idSocio: Int): Boolean {
         val db = readableDatabase
-
-        // Verificar si ya existe una cuota vigente impaga
         val cursorVigente = db.rawQuery(
-            """
-                SELECT 1 FROM Cuota
-                WHERE id_socio = ? AND estado = 'Impaga' AND vigente = 'S'
-                LIMIT 1
-            """.trimIndent(),
+            "SELECT 1 FROM Cuota WHERE id_socio = ? AND estado = 'Impaga' AND vigente = 'S' LIMIT 1",
             arrayOf(idSocio.toString())
         )
-
         val existeCuotaImpaga = cursorVigente.moveToFirst()
         cursorVigente.close()
+        if (existeCuotaImpaga) return false
 
-        if (existeCuotaImpaga) {
-            return false // No crear nueva cuota
-        }
-
-        // Obtener el último número de cuota
-        val cursor = db.rawQuery(
-            """
-                SELECT MAX(numero_cuota)
-                FROM Cuota
-                WHERE id_socio = ?
-            """.trimIndent(),
-            arrayOf(idSocio.toString())
-        )
-
+        val cursor = db.rawQuery("SELECT MAX(numero_cuota) FROM Cuota WHERE id_socio = ?", arrayOf(idSocio.toString()))
         var ultimoNumeroCuota = 0
-        if (cursor.moveToFirst()) {
-            ultimoNumeroCuota = cursor.getInt(0)
-        }
+        if (cursor.moveToFirst()) ultimoNumeroCuota = cursor.getInt(0)
         cursor.close()
 
         val nuevaCuota = ultimoNumeroCuota + 1
@@ -548,7 +487,6 @@ class SQLiteHelper(context: Context) : SQLiteOpenHelper(context, "clubdeportivo.
             put("estado", "Impaga")
             put("id_socio", idSocio)
         }
-
         val resultado = writableDb.insert("Cuota", null, valores)
         return resultado != -1L
     }
@@ -556,41 +494,31 @@ class SQLiteHelper(context: Context) : SQLiteOpenHelper(context, "clubdeportivo.
     fun obtenerEstadoCuota(idSocio: Int): EstadoCuota {
         val db = readableDatabase
         val fechaActual = Calendar.getInstance()
-
-        // Buscar cuota impaga vigente
         val cursor = db.rawQuery(
             """
-            SELECT id_cuota, monto, fecha_fin
-            FROM Cuota
-            WHERE id_socio = ? AND estado = 'Impaga' AND vigente = 'S'
-            ORDER BY numero_cuota ASC
-            LIMIT 1
-        """.trimIndent(),
+                SELECT id_cuota, monto, fecha_fin
+                FROM Cuota
+                WHERE id_socio = ? AND estado = 'Impaga' AND vigente = 'S'
+                ORDER BY numero_cuota ASC
+                LIMIT 1
+            """.trimIndent(),
             arrayOf(idSocio.toString())
         )
-
         return if (cursor.moveToFirst()) {
             val idCuota = cursor.getInt(0)
             val monto = cursor.getDouble(1)
             val fechaFinStr = cursor.getString(2)
             cursor.close()
-
             val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
             val fechaFin = dateFormat.parse(fechaFinStr)
-
             val diasRestantes = if (fechaFin != null) {
-                val diffInMillis = fechaFin.time - fechaActual.timeInMillis
-                (diffInMillis / (1000 * 60 * 60 * 24)).toInt()
-            } else {
-                null
-            }
-
+                ((fechaFin.time - fechaActual.timeInMillis) / (1000 * 60 * 60 * 24)).toInt()
+            } else null
             val estado = when {
                 diasRestantes != null && diasRestantes < 0 -> "Vencido"
                 diasRestantes != null && diasRestantes <= 15 -> "Próximo a vencer"
                 else -> "Al día"
             }
-
             EstadoCuota(
                 tieneDeuda = true,
                 estado = estado,
