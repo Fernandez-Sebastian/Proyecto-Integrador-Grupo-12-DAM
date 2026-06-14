@@ -7,12 +7,17 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.R
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 
 class LoginActivity : AppCompatActivity() {
+
+    lateinit var helper: SQLiteHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        helper = SQLiteHelper(this)
 
         val btnIngresar = findViewById<Button>(R.id.btnIngresar)
         val etUsuario = findViewById<EditText>(R.id.etUsuario)
@@ -30,12 +35,7 @@ class LoginActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            // Credenciales hardcodeadas
-            // To do reemplazar los valores por la consulta a base de datos.
-            val usuarioCorrecto = "admin"
-            val passwordCorrecta = "1234"
-
-            if (usuario == usuarioCorrecto && password == passwordCorrecta) {
+            if (helper.validarUsuario(usuario, password)) {
 
                 Toast.makeText(this, "Login correcto", Toast.LENGTH_SHORT).show()
 
@@ -50,9 +50,19 @@ class LoginActivity : AppCompatActivity() {
         }
 
         btnSalir.setOnClickListener {
-            val intent = Intent(this, LogoutActivity::class.java)
-            startActivity(intent)
-            finish()
+            AlertDialog.Builder(this)
+                .setTitle("Cerrar sesión")
+                .setMessage("¿Deseas cerrar sesión y salir de la aplicación?")
+                .setPositiveButton("Sí") { _, _ ->
+                    // Limpiar datos de sesión si los hay
+                    val sharedPref = getSharedPreferences("sesion", MODE_PRIVATE)
+                    sharedPref.edit().clear().apply()
+
+                    // Cerrar la app
+                    finishAffinity()
+                }
+                .setNegativeButton("Cancelar", null)
+                .show()
         }
     }
 }

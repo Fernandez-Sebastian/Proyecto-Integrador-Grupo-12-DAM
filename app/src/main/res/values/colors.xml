@@ -24,6 +24,7 @@
     <!-- Estados -->
     <color name="estado_rojo">#C62828</color>
     <color name="estado_verde">#2E7D32</color>
+    <color name="estado_naranja">#FF9800</color>
 
     <!-- Alertas -->
     <color name="rojo_alerta">#D32F2F</color>

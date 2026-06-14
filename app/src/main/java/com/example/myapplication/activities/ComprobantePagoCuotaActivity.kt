@@ -8,6 +8,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.R
 import com.example.myapplication.utils.FooterManager
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class ComprobantePagoCuotaActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,7 +20,7 @@ class ComprobantePagoCuotaActivity : AppCompatActivity() {
         // BOTÓN REGRESAR (del header.xml)
         val btnBack = findViewById<ImageButton>(R.id.btnBack)
         val tvHeaderTitle = findViewById<TextView>(R.id.tvHeaderTitle)
-        
+
         tvHeaderTitle?.text = "Comprobante Pago de Cuota"
         btnBack?.setOnClickListener {
             finish()
@@ -27,23 +30,42 @@ class ComprobantePagoCuotaActivity : AppCompatActivity() {
         val tvDni = findViewById<TextView>(R.id.tvDni)
         val tvMonto = findViewById<TextView>(R.id.tvMonto)
         val tvMetodo = findViewById<TextView>(R.id.tvMetodo)
+        val tvCantidadCuotas = findViewById<TextView>(R.id.tvCantidadCuotas)
+        val tvFecha = findViewById<TextView>(R.id.tvFecha)
+        val tvHora = findViewById<TextView>(R.id.tvHora)
         val btnDescargar = findViewById<Button>(R.id.btnDescargar)
         val btnVolverMenu = findViewById<Button>(R.id.btnVolverMenu)
 
         // DATOS RECIBIDOS
-        val nombre = intent.getStringExtra("nombre")
-        val dni = intent.getStringExtra("dni")
-        val monto = intent.getStringExtra("monto")
-        val metodo = intent.getStringExtra("metodo")
+        val nombre = intent.getStringExtra("nombre") ?: "---"
+        val dni = intent.getStringExtra("dni") ?: "---"
+        val monto = intent.getStringExtra("monto") ?: "0"
+        val metodo = intent.getStringExtra("metodo") ?: "---"
+        val cantidadCuotas = intent.getStringExtra("cantidad_cuotas") ?: "1"
+
+        // Obtener fecha y hora actual
+        val fechaActual = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Calendar.getInstance().time)
+        val horaActual = SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Calendar.getInstance().time)
 
         // SETEO DATOS
         tvNombre.text = "Socio: $nombre"
         tvDni.text = "DNI: $dni"
-        tvMonto.text = "Monto: $monto"
+        tvMonto.text = "Monto: $$monto"
         tvMetodo.text = "Método: $metodo"
 
+        // Mostrar cantidad de cuotas solo si es más de 1
+        if (cantidadCuotas.toIntOrNull() ?: 1 > 1) {
+            tvCantidadCuotas.text = "Cuotas pagadas: $cantidadCuotas"
+            tvCantidadCuotas.visibility = android.view.View.VISIBLE
+        } else {
+            tvCantidadCuotas.visibility = android.view.View.GONE
+        }
+
+        tvFecha.text = "Fecha: $fechaActual"
+        tvHora.text = "Hora: $horaActual"
+
         btnDescargar.setOnClickListener {
-            Toast.makeText(this,"Descarga exitosa",Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Comprobante descargado con éxito", Toast.LENGTH_SHORT).show()
         }
 
         btnVolverMenu.setOnClickListener {

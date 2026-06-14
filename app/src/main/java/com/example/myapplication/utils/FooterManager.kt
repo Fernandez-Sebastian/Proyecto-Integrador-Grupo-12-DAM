@@ -6,7 +6,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import com.example.myapplication.R
-import com.example.myapplication.activities.LogoutActivity
+import com.example.myapplication.activities.LoginActivity
 import com.example.myapplication.activities.MenuActivity
 
 object FooterManager {
@@ -36,11 +36,12 @@ object FooterManager {
         }
 
         ivLogout?.setOnClickListener {
-            val intent = Intent(activity, LogoutActivity::class.java)
+            // Cerrar sesión correctamente
+            val intent = Intent(activity, LoginActivity::class.java)
+            // Limpiar toda la pila de actividades
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             activity.startActivity(intent)
-
-
-
+            activity.finishAffinity() // Finaliza todas las actividades
         }
     }
 }
