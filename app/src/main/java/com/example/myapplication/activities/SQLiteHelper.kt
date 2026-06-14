@@ -282,12 +282,10 @@ class SQLiteHelper(context: Context) : SQLiteOpenHelper(context, "clubdeportivo.
     }
 
     fun buscarIdSocioPorDni(dni: String): Int? {
-
         val db = readableDatabase
         val cursor = db.rawQuery("SELECT id_socio FROM Socios WHERE dni = ?", arrayOf(dni))
         val idSocio = if (cursor.moveToFirst()) cursor.getInt(0) else null
         cursor.close()
-
         return idSocio
     }
 
@@ -295,12 +293,10 @@ class SQLiteHelper(context: Context) : SQLiteOpenHelper(context, "clubdeportivo.
 
     fun crearCarnet(idSocio: Int, numero: String): Long {
         val db = writableDatabase
-
         val formatoFecha = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         val fechaEmision = formatoFecha.format(Calendar.getInstance().time)
         val fechaVencimientoCalendar = Calendar.getInstance().apply { add(Calendar.YEAR, 1) }
         val fechaVencimiento = formatoFecha.format(fechaVencimientoCalendar.time)
-
         val valores = ContentValues()
         valores.put("fecha_emision", fechaEmision)
         valores.put("fecha_vencimiento", fechaVencimiento)
@@ -310,7 +306,6 @@ class SQLiteHelper(context: Context) : SQLiteOpenHelper(context, "clubdeportivo.
     }
 
     fun existeCarnetSocio(dni: String): Boolean {
-
         val db = readableDatabase
         val cursor = db.rawQuery(
             """
@@ -322,11 +317,8 @@ class SQLiteHelper(context: Context) : SQLiteOpenHelper(context, "clubdeportivo.
             """.trimIndent(),
             arrayOf(dni)
         )
-
         val existe = cursor.moveToFirst()
-
         cursor.close()
-
         return existe
     }
 
@@ -334,7 +326,6 @@ class SQLiteHelper(context: Context) : SQLiteOpenHelper(context, "clubdeportivo.
 
     fun insertarPrimeraCuotaSocio(idSocio: Int): Long {
         val db = writableDatabase
-
         val formatoFecha = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         val fechaInicio = formatoFecha.format(Calendar.getInstance().time)
         val fechaFinCalendar = Calendar.getInstance().apply { add(Calendar.MONTH, 1) }
@@ -350,14 +341,11 @@ class SQLiteHelper(context: Context) : SQLiteOpenHelper(context, "clubdeportivo.
         valores.put("cantidad_cuota_financiada", "1")
         valores.put("estado", "Impaga")
         valores.put("id_socio", idSocio)
-
         return db.insert("Cuota", null, valores)
     }
 
     fun existenVencimientosHoy(): Boolean {
-
         val db = readableDatabase
-
         val cursor = db.rawQuery(
             """
                 SELECT 1
@@ -376,11 +364,8 @@ class SQLiteHelper(context: Context) : SQLiteOpenHelper(context, "clubdeportivo.
             """.trimIndent(),
             null
         )
-
         val existen = cursor.moveToFirst()
-
         cursor.close()
-
         return existen
     }
 

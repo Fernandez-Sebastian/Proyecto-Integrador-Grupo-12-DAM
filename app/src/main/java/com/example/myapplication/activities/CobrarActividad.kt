@@ -9,6 +9,7 @@ import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import com.example.myapplication.R
 import com.example.myapplication.utils.FooterManager
 import com.google.android.material.textfield.TextInputEditText
@@ -18,26 +19,20 @@ import java.util.Locale
 
 class CobrarActividad : AppCompatActivity() {
 
+    private lateinit var dbHelper: SQLiteHelper
     data class NoSocio(
         val dni: String,
         val nombre: String
     )
 
-    private val noSocios = listOf(
-        NoSocio("22345678", "Juan Pérez"),
-        NoSocio("30111222", "María Gómez"),
-        NoSocio("33444555", "Carlos López")
-    )
-
     private var resultadoActual: NoSocio? = null
-
-    private fun buscarNoSocioPorDni(dni: String): NoSocio? {
-        return noSocios.find { it.dni == dni }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cobrar_actividad)
+
+        //Instancia a la BD
+        dbHelper = SQLiteHelper(this)
 
         // Configurar Header
         val btnBack = findViewById<ImageButton>(R.id.btnBack)
@@ -55,11 +50,14 @@ class CobrarActividad : AppCompatActivity() {
 
         textInputLayout.setEndIconOnClickListener {
             val dni = inputDni.text.toString()
-            resultadoActual = buscarNoSocioPorDni(dni)
+            val resultado = dbHelper.buscarNoSocioPorDni(dni)
 
-            if (resultadoActual != null) {
-                tvResultado.text = "${resultadoActual!!.nombre}\nDNI: ${resultadoActual!!.dni}"
+            if (resultado != null) {
+                val (nombre, apellido) = resultado
+                resultadoActual = NoSocio(dni, "$nombre $apellido")
+                tvResultado.text = "$nombre $apellido\nDNI: $dni"
             } else {
+                resultadoActual = null
                 tvResultado.text = "No Socio no encontrado"
             }
         }
@@ -68,7 +66,9 @@ class CobrarActividad : AppCompatActivity() {
         //Seleccionar actividad
         val autoCompleteActividad = findViewById<AutoCompleteTextView>(R.id.seleccionarActividad)
 
-        val itemsActividad = listOf("Fútbol", "Padle", "Yoga")
+        val actividades = dbHelper.obtenerActividades()
+        val itemsActividad = actividades.map { it.first }
+        val precios = actividades.associate { it.first to it.third }
 
         val adapterActividad = ArrayAdapter(
             this,
@@ -78,22 +78,13 @@ class CobrarActividad : AppCompatActivity() {
 
         autoCompleteActividad.setAdapter(adapterActividad)
 
-        val actividadSelecionada = autoCompleteActividad.text.toString()
-
-        //Precios
-        val precios = mapOf(
-            "Fútbol" to 10000,
-            "Padle" to 20000,
-            "Yoga" to 15000
-        )
-
         val tvPrecio = findViewById<TextView>(R.id.tvPrecio)
 
         autoCompleteActividad.setOnItemClickListener { parent, _, position, _ ->
             val actividad = parent.getItemAtPosition(position).toString()
-            val precio = precios[actividad] ?: 0
+            val precio = precios[actividad] ?: 0.0
 
-            tvPrecio.text = "$ ${"%,d".format(precio)}"
+            tvPrecio.text = "$ ${"%,.2f".format(precio)}"
         }
 
         //Seleccionar medio de pago
@@ -125,12 +116,27 @@ class CobrarActividad : AppCompatActivity() {
 
         btnCobrar.setOnClickListener {
 
+            if (resultadoActual == null) {
+                Toast.makeText(this, "Debe ingresar un No Socio válido", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             val resultado = resultadoActual ?: return@setOnClickListener
 
             val nombre = resultado.nombre
             val dni = resultado.dni
+
+            if (autoCompleteActividad.text.isNullOrBlank()) {
+                Toast.makeText(this, "Debe seleccionar una actividad", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             val actividad = autoCompleteActividad.text.toString()
             val medioPago = autoCompleteMedioPago.text.toString()
+
+            if (autoCompleteMedioPago.text.isNullOrBlank()) {
+                Toast.makeText(this, "Debe seleccionar un medio de pago", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             val precioTexto = tvPrecio.text.toString()
             val fecha = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
             val hora = SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date())
