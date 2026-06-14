@@ -10,9 +10,13 @@ import com.example.myapplication.utils.FooterManager
 
 class MenuActivity : AppCompatActivity() {
 
+    private lateinit var dbHelper: SQLiteHelper
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
+
+        dbHelper = SQLiteHelper(this)
 
         val tvSaludo = findViewById<TextView>(R.id.tvSaludo)
         val tvAlerta = findViewById<TextView>(R.id.tvAlerta)
@@ -29,8 +33,7 @@ class MenuActivity : AppCompatActivity() {
         tvSaludo.text = "Hola, $nombreUsuario"
 
         // Alert de Vencimiento
-        // to do Manejo de la variable hayVencimientos por medio de una consulta a la base de datos
-        val hayVencimientos = false
+        val hayVencimientos = dbHelper.existenVencimientosHoy()
 
         if (hayVencimientos) {
             tvAlerta.text = "Tenés socios con vencimientos hoy"
