@@ -18,7 +18,7 @@ class ComprobantePagoCuotaActivity : AppCompatActivity() {
         val btnBack = findViewById<ImageButton>(R.id.btnBack)
         val tvHeaderTitle = findViewById<TextView>(R.id.tvHeaderTitle)
         
-        tvHeaderTitle?.text = "Comprobante de Cuota"
+        tvHeaderTitle?.text = "Comprobante Pago de Cuota"
         btnBack?.setOnClickListener {
             finish()
         }
