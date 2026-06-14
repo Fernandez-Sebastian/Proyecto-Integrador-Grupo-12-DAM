@@ -322,6 +322,33 @@ class SQLiteHelper(context: Context) : SQLiteOpenHelper(context, "clubdeportivo.
         return existe
     }
 
+    fun obtenerDatosCarnetPorDni(dni: String): Map<String, String>? {
+        val db = readableDatabase
+        val cursor = db.rawQuery(
+            """
+                SELECT s.nombre, s.apellido, c.fecha_vencimiento
+                FROM Socios s
+                INNER JOIN Carnet c ON s.id_socio = c.id_socio
+                WHERE s.dni = ?
+            """.trimIndent(),
+            arrayOf(dni)
+        )
+
+        return if (cursor.moveToFirst()) {
+            val nombre = cursor.getString(0)
+            val apellido = cursor.getString(1)
+            val vencimiento = cursor.getString(2)
+            cursor.close()
+            mapOf(
+                "nombreCompleto" to "${nombre} ${apellido}",
+                "vencimiento" to vencimiento
+            )
+        } else {
+            cursor.close()
+            null
+        }
+    }
+
     // ==================== MÉTODOS DE CUOTAS ====================
 
     fun insertarPrimeraCuotaSocio(idSocio: Int): Long {
