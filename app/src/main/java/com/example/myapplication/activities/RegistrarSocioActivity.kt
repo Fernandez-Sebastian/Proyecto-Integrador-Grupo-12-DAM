@@ -18,6 +18,8 @@ import java.util.Locale
 
 class RegistrarSocioActivity : AppCompatActivity() {
 
+    private lateinit var dbHelper: SQLiteHelper
+
     private lateinit var btnBack: ImageButton
     private lateinit var txtNombre: TextInputEditText
     private lateinit var txtApellido: TextInputEditText
@@ -27,6 +29,11 @@ class RegistrarSocioActivity : AppCompatActivity() {
     private lateinit var btnImprimirCarnet: Button
     private lateinit var btnRegistrar: Button
 
+    private var fechaNacimientoSeleccionada: Calendar? = null
+    private var socioRegistrado: Socio? = null
+
+    private val formatoFecha = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+
     private data class Socio(
         val nombre: String,
         val apellido: String,
@@ -35,28 +42,30 @@ class RegistrarSocioActivity : AppCompatActivity() {
         val aptoMedico: Boolean
     )
 
-    private val socioExistente = Socio(
-        nombre = "Glaucia",
-        apellido = "Ferreira",
-        dni = "95789456",
-        fechaNacimiento = "19/06/1996",
-        aptoMedico = true
-    )
-
-    private var socioIngresado: Socio? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registrar_socio)
 
-        // Configurar Header
+        dbHelper = SQLiteHelper(this)
+
+        configurarHeader()
+        inicializarControles()
+        configurarEventos()
+        configurarFooter()
+    }
+
+    private fun configurarHeader() {
         btnBack = findViewById(R.id.btnBack)
+
         val tvHeaderTitle = findViewById<TextView>(R.id.tvHeaderTitle)
-        tvHeaderTitle?.text = "Registrar Socio"
+        tvHeaderTitle.text = "Registrar Socio"
+
         btnBack.setOnClickListener {
             finish()
         }
+    }
 
+    private fun inicializarControles() {
         txtNombre = findViewById(R.id.txtNombre)
         txtApellido = findViewById(R.id.txtApellido)
         txtDni = findViewById(R.id.txtDni)
@@ -64,25 +73,11 @@ class RegistrarSocioActivity : AppCompatActivity() {
         switchAptoMedico = findViewById(R.id.switchAptoMedico)
         btnImprimirCarnet = findViewById(R.id.btnImprimirCarnet)
         btnRegistrar = findViewById(R.id.btnRegistrar)
+    }
 
+    private fun configurarEventos() {
         tvFechaNacimiento.setOnClickListener {
-            var fechaNacimientoSeleccionada: Calendar? = null
-            val formatoFecha = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-            val fechaActual = Calendar.getInstance()
-
-            val datePicker = DatePickerDialog(
-                this,
-                { _, year, month, dayOfMonth ->
-                    val fechaSeleccionada = Calendar.getInstance()
-                    fechaSeleccionada.set(year, month, dayOfMonth)
-                    fechaNacimientoSeleccionada = fechaSeleccionada
-                    tvFechaNacimiento.setText(formatoFecha.format(fechaSeleccionada.time))
-                },
-                fechaActual.get(Calendar.YEAR),
-                fechaActual.get(Calendar.MONTH),
-                fechaActual.get(Calendar.DAY_OF_MONTH)
-            )
-            datePicker.show()
+            mostrarSelectorFecha()
         }
 
         btnRegistrar.setOnClickListener {
@@ -90,23 +85,11 @@ class RegistrarSocioActivity : AppCompatActivity() {
         }
 
         btnImprimirCarnet.setOnClickListener {
-            val socio = socioIngresado
-
-            /*if (socio == null) {
-                Toast.makeText(
-                    this,
-                    "Primero debe registrar un socio.",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }*/
-            //completar luego para abrir CarnetActivity
-            //para abrir con los datos del socio registrado
-            //revisar primero si podemos con datos sino abrir sin datos para que quede el flujo
-            val intent = Intent(this, CarnetActivity::class.java)
-            startActivity(intent)
+            abrirCarnet()
         }
+    }
 
-        // --- LÓGICA DEL FOOTER ---
+    private fun configurarFooter() {
         FooterManager.setupFooter(
             activity = this,
             showWhiteBar = true,
@@ -116,6 +99,26 @@ class RegistrarSocioActivity : AppCompatActivity() {
         )
     }
 
+    private fun mostrarSelectorFecha() {
+        val fechaActual = Calendar.getInstance()
+
+        val datePicker = DatePickerDialog(
+            this,
+            { _, year, month, dayOfMonth ->
+                val fechaSeleccionada = Calendar.getInstance()
+                fechaSeleccionada.set(year, month, dayOfMonth)
+
+                fechaNacimientoSeleccionada = fechaSeleccionada
+                tvFechaNacimiento.setText(formatoFecha.format(fechaSeleccionada.time))
+            },
+            fechaActual.get(Calendar.YEAR),
+            fechaActual.get(Calendar.MONTH),
+            fechaActual.get(Calendar.DAY_OF_MONTH)
+        )
+
+        datePicker.show()
+    }
+
     private fun registrarSocio() {
         val nombre = txtNombre.text.toString().trim()
         val apellido = txtApellido.text.toString().trim()
@@ -123,19 +126,13 @@ class RegistrarSocioActivity : AppCompatActivity() {
         val fechaNacimiento = tvFechaNacimiento.text.toString().trim()
         val aptoMedico = switchAptoMedico.isChecked
 
+        //validamos los datos ingresados
         if (!validarDatosSocio(nombre, apellido, dni, fechaNacimiento)) {
             return
         }
 
-        val socio = Socio(
-            nombre = nombre,
-            apellido = apellido,
-            dni = dni,
-            fechaNacimiento = fechaNacimiento,
-            aptoMedico = aptoMedico
-        )
-
-        if (socio.dni == socioExistente.dni) {
+        //verificamos si existe el socio ingresado por dni
+        if (dbHelper.existeSocioPorDni(dni)) {
             mostrarDialogo(
                 titulo = "Socio existente",
                 mensaje = "Los datos ingresados corresponden a un socio registrado"
@@ -143,11 +140,56 @@ class RegistrarSocioActivity : AppCompatActivity() {
             return
         }
 
-        socioIngresado = socio
+        //insertamos el socio
+        val resultado = dbHelper.insertarSocio(
+            nombre = nombre,
+            apellido = apellido,
+            dni = dni,
+            fechaNacimiento = fechaNacimiento,
+            aptoMedico = if (aptoMedico) 1 else 0,
+            habilitado = 1
+        )
+
+        if (resultado == -1L) {
+            mostrarDialogo(
+                titulo = "Error",
+                mensaje = "No se pudo registrar el socio."
+            )
+            return
+        }
+
+        socioRegistrado = Socio(
+            nombre = nombre,
+            apellido = apellido,
+            dni = dni,
+            fechaNacimiento = fechaNacimiento,
+            aptoMedico = aptoMedico
+        )
+
+        //Creamos la primera cuota para el socio registrado
+        val idSocio = dbHelper.buscarIdSocioPorDni(dni)
+
+        if (idSocio == null) {
+            mostrarDialogo(
+                titulo = "Error",
+                mensaje = "No se encontró el socio registrado."
+            )
+            return
+        }
+
+        val resultadoCuota = dbHelper.insertarPrimeraCuotaSocio(idSocio)
+
+        if (resultadoCuota == -1L) {
+            mostrarDialogo(
+                titulo = "Error",
+                mensaje = "No se pudo generar la primera cuota del socio."
+            )
+            return
+        }
 
         mostrarDialogo(
             titulo = "Registro exitoso",
-            mensaje = "Socio ${socio.nombre} ${socio.apellido} registrado exitosamente"
+            mensaje = "Socio $nombre $apellido registrado exitosamente"
         )
     }
 
@@ -157,27 +199,52 @@ class RegistrarSocioActivity : AppCompatActivity() {
         dni: String,
         fechaNacimiento: String
     ): Boolean {
-        txtNombre.error = null
-        txtApellido.error = null
-        txtDni.error = null
-        tvFechaNacimiento.error = null
+        limpiarErrores()
 
         if (nombre.isEmpty()) {
             txtNombre.error = "Ingrese el nombre"
             return false
         }
+
         if (apellido.isEmpty()) {
             txtApellido.error = "Ingrese el apellido"
             return false
         }
+
         if (dni.isEmpty()) {
             txtDni.error = "Ingrese el DNI"
             return false
         }
+
+        if (dni.length < 7 || dni.length > 8) {
+            txtDni.error = "Ingrese un DNI válido"
+            return false
+        }
+
         if (fechaNacimiento.isEmpty() || fechaNacimiento == "dd/mm/aaaa") {
             tvFechaNacimiento.error = "Ingrese la fecha de nacimiento"
             return false
         }
+
+        val fecha = fechaNacimientoSeleccionada ?: convertirFechaACalendar(fechaNacimiento)
+
+        if (fecha == null) {
+            tvFechaNacimiento.error = "Ingrese una fecha válida"
+            return false
+        }
+
+        //calculamos la edad con la fecha ingresada y validamos que tenga entre 5 y 100 años
+        val edad = calcularEdad(fecha)
+
+        if (edad < 5 || edad > 100) {
+            mostrarDialogo(
+                titulo = "Fecha inválida",
+                mensaje = "La edad debe estar comprendida entre 5 y 100 años."
+            )
+            return false
+        }
+
+        //validamos el apto medico requerido
         if (!switchAptoMedico.isChecked) {
             mostrarDialogo(
                 titulo = "Apto médico requerido",
@@ -185,8 +252,62 @@ class RegistrarSocioActivity : AppCompatActivity() {
             )
             return false
         }
-        //faltan validaciones de dni valido, edad valida, etc
+
         return true
+    }
+
+    private fun limpiarErrores() {
+        txtNombre.error = null
+        txtApellido.error = null
+        txtDni.error = null
+        tvFechaNacimiento.error = null
+    }
+
+    private fun abrirCarnet() {
+        val socio = socioRegistrado
+
+        //se habilita luego de registrar un socio
+        if (socio == null) {
+            mostrarDialogo(
+                titulo = "Carnet no disponible",
+                mensaje = "Primero debe registrar un socio."
+            )
+            return
+        }
+
+        //se busca el id del socio
+        val idSocio = dbHelper.buscarIdSocioPorDni(socio.dni)
+
+        if (idSocio == null) {
+            mostrarDialogo(
+                titulo = "Error",
+                mensaje = "No se encontró el socio registrado."
+            )
+            return
+        }
+
+        //validamos si existe un carnet para el socio sino lo damos de alta
+        if (!dbHelper.existeCarnetSocio(socio.dni)) {
+            val resultado = dbHelper.crearCarnet(
+                idSocio = idSocio,
+                numero = socio.dni
+            )
+
+            if (resultado == -1L) {
+                mostrarDialogo(
+                    titulo = "Error",
+                    mensaje = "No se pudo generar el carnet del socio."
+                )
+                return
+            }
+        }
+
+        //abrimos el carnet del socio
+        val intent = Intent(this, CarnetActivity::class.java).apply {
+            putExtra("dni", socio.dni)
+        }
+
+        startActivity(intent)
     }
 
     private fun mostrarDialogo(titulo: String, mensaje: String) {
@@ -195,5 +316,38 @@ class RegistrarSocioActivity : AppCompatActivity() {
             .setMessage(mensaje)
             .setPositiveButton("Aceptar", null)
             .show()
+    }
+
+    private fun convertirFechaACalendar(fecha: String): Calendar? {
+        return try {
+            val date = formatoFecha.parse(fecha) ?: return null
+
+            Calendar.getInstance().apply {
+                time = date
+            }
+        } catch (_: Exception) {
+            null
+        }
+    }
+
+    private fun calcularEdad(fechaNacimiento: Calendar): Int {
+        val hoy = Calendar.getInstance()
+
+        var edad = hoy.get(Calendar.YEAR) - fechaNacimiento.get(Calendar.YEAR)
+
+        val mesActual = hoy.get(Calendar.MONTH)
+        val diaActual = hoy.get(Calendar.DAY_OF_MONTH)
+
+        val mesNacimiento = fechaNacimiento.get(Calendar.MONTH)
+        val diaNacimiento = fechaNacimiento.get(Calendar.DAY_OF_MONTH)
+
+        if (
+            mesActual < mesNacimiento ||
+            (mesActual == mesNacimiento && diaActual < diaNacimiento)
+        ) {
+            edad--
+        }
+
+        return edad
     }
 }
