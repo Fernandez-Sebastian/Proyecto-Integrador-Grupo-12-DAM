@@ -233,7 +233,7 @@ class SQLiteHelper(context: Context): SQLiteOpenHelper(context, "clubdeportivo.d
                     SELECT 1
                     FROM Carnet c
                     INNER JOIN Socios s
-                        ON c.id_socio = s.id
+                        ON c.id_socio = s.id_socio
                     WHERE s.dni = ?
                     LIMIT 1
                 """.trimIndent(),
@@ -245,6 +245,33 @@ class SQLiteHelper(context: Context): SQLiteOpenHelper(context, "clubdeportivo.d
         cursor.close()
 
         return existe
+    }
+
+    fun obtenerDatosCarnetPorDni(dni: String): Map<String, String>? {
+        val db = readableDatabase
+        val cursor = db.rawQuery(
+            """
+                SELECT s.nombre, s.apellido, c.fecha_vencimiento
+                FROM Socios s
+                INNER JOIN Carnet c ON s.id_socio = c.id_socio
+                WHERE s.dni = ?
+            """.trimIndent(),
+            arrayOf(dni)
+        )
+
+        return if (cursor.moveToFirst()) {
+            val nombre = cursor.getString(0)
+            val apellido = cursor.getString(1)
+            val vencimiento = cursor.getString(2)
+            cursor.close()
+            mapOf(
+                "nombreCompleto" to "${nombre} ${apellido}",
+                "vencimiento" to vencimiento
+            )
+        } else {
+            cursor.close()
+            null
+        }
     }
 
     fun insertarPrimeraCuotaSocio(idSocio: Int): Long {

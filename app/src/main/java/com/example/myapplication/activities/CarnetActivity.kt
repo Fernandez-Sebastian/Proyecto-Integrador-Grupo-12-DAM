@@ -20,10 +20,14 @@ import com.example.myapplication.utils.FooterManager
 class CarnetActivity : AppCompatActivity() {
 
     private var socioEncontrado = false
+    private lateinit var dbHelper: SQLiteHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_carnet)
+
+        // Inicializar el helper de la base de datos
+        dbHelper = SQLiteHelper(this)
 
         // Configurar Header
         val btnBack = findViewById<ImageButton>(R.id.btnBack)
@@ -42,24 +46,32 @@ class CarnetActivity : AppCompatActivity() {
         val ivBarcode = findViewById<ImageView>(R.id.ivBarcode)
         val btnImprimir = findViewById<Button>(R.id.btnImprimir)
 
+        // Referencias de los campos del carnet
+        val tvNombreSocio = findViewById<TextView>(R.id.tvNombreSocio)
+        val tvDniSocio = findViewById<TextView>(R.id.tvDniSocio)
+        val tvVencimiento = findViewById<TextView>(R.id.tvVencimiento)
+
         // Estado inicial del botón imprimir - Inactivo
         btnImprimir.alpha = 0.5f
 
-        // --- Ejemplo de búsqueda ---
-        etBuscarDni.setText("1234567")
-
-        // Lógica de búsqueda siguiendo el DNI
-        ivLupa.setOnClickListener {
-            val dni = etBuscarDni.text.toString().trim()
+        // Función de búsqueda reutilizable
+        fun realizarBusqueda(dni: String) {
+            // Consultar la base de datos
+            val datos = dbHelper.obtenerDatosCarnetPorDni(dni)
             
-            if (dni == "1234567") {
+            if (datos != null) {
                 Toast.makeText(this, getString(R.string.socio_encontrado), Toast.LENGTH_SHORT).show()
                 
-                // Actualizar estado
+                // Actualizar estado y UI
                 socioEncontrado = true
                 btnImprimir.alpha = 1.0f
                 
-                // Mostrar carnet
+                // Presentar los datos en el carnet
+                tvNombreSocio.text = datos["nombreCompleto"]
+                tvDniSocio.text = "DNI: $dni"
+                tvVencimiento.text = "Vence: ${datos["vencimiento"]}"
+                
+                // Mostrar carnet y ocultar mensaje inicial
                 tvMensajeBusqueda.visibility = View.GONE
                 clContenidoSocio.visibility = View.VISIBLE
 
@@ -71,16 +83,33 @@ class CarnetActivity : AppCompatActivity() {
                     }
                 }
                 
-            } else if (dni.isNotEmpty()) {
+            } else {
                 Toast.makeText(this, getString(R.string.socio_inexistente), Toast.LENGTH_SHORT).show()
                 
                 // Resetear estado
                 socioEncontrado = false
                 btnImprimir.alpha = 0.5f
                 
-                // Estado inicial
+                // Mostrar mensaje de búsqueda inicial
                 tvMensajeBusqueda.visibility = View.VISIBLE
                 clContenidoSocio.visibility = View.GONE
+            }
+        }
+
+        // --- 1. Recibir DNI desde el Registro de Socio ---
+        val dniIntent = intent.getStringExtra("dni")
+        if (!dniIntent.isNullOrEmpty()) {
+            etBuscarDni.setText(dniIntent)
+            realizarBusqueda(dniIntent)
+        }
+
+        // --- 2. Lógica de búsqueda manual mediante la lupa ---
+        ivLupa.setOnClickListener {
+            val dni = etBuscarDni.text.toString().trim()
+            if (dni.isNotEmpty()) {
+                realizarBusqueda(dni)
+            } else {
+                Toast.makeText(this, "Por favor, ingrese un DNI", Toast.LENGTH_SHORT).show()
             }
         }
 
