@@ -78,8 +78,6 @@ class CobrarActividad : AppCompatActivity() {
 
         autoCompleteActividad.setAdapter(adapterActividad)
 
-        val actividadSelecionada = autoCompleteActividad.text.toString()
-
         val tvPrecio = findViewById<TextView>(R.id.tvPrecio)
 
         autoCompleteActividad.setOnItemClickListener { parent, _, position, _ ->

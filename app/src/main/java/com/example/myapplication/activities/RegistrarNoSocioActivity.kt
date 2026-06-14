@@ -127,7 +127,7 @@ class RegistrarNoSocioActivity : AppCompatActivity() {
             DNI: ${noSocio.dni}
             F. Nac.: ${noSocio.fechaNacimiento}
             Apto médico: $tvAptoMedico
-            Fecha: $fecha
+            Fecha registración: $fecha
             Hora: $hora
             """.trimIndent()
 
