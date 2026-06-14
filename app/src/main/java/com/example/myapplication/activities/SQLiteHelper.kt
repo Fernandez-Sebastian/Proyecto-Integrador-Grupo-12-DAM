@@ -41,7 +41,7 @@ class SQLiteHelper(context: Context) : SQLiteOpenHelper(context, "clubdeportivo.
             INSERT INTO usuarios
             (NombreUsu, PassUsu, RolUsu, Habilitado)
             VALUES
-            ('admin', '12345', 1, 'S')
+            ('admin', '1234', 1, 'S')
         """.trimIndent())
 
         // Tabla NoSocios
